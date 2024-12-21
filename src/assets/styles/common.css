@@ -1,0 +1,111 @@
+/* 毛玻璃背景 */
+.glass {
+  background: rgba(22, 22, 22, 0.38);
+  backdrop-filter: blur(15px);
+}
+
+/* 橙色背景 */
+.orange {
+  background: rgba(255, 242, 234, 0.92);
+}
+
+.shadow {
+  border-radius: 14px;
+  box-shadow: 4px 10px 15px 0 rgba(255, 178, 106, 0.2);
+}
+
+/* 导航响应式布局 */
+@media screen and (max-width: 640px) {
+  .nav {
+    padding-left: 20px;
+  }
+
+  .nav ul li {
+    margin-right: 35px;
+  }
+
+  .nav ul li:nth-child(n + 3) {
+    display: none;
+  }
+
+  .menu label ul {
+    left: 48vw;
+  }
+
+  .menu label input:checked + .menu .hamburger {
+    left: 117vw;
+  }
+
+  .modal {
+    padding: 1.6rem 1rem;
+  }
+
+  .modal .options {
+    flex-direction: column;
+  }
+
+  .modal .options .btn {
+    margin: 10px;
+    width: 80vw;
+  }
+
+  /* header .menu {
+        position: relative;
+        float: right;
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 178, 106, .2);
+        z-index: 4;
+    }
+
+    .menu-block {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        height: 60vh;
+        width: 230px;
+        background: #fff;
+        transition: all .5s;
+        z-index: 5;
+        /* border-radius: 50%;
+    } */
+
+  #nav .menu:hover .menu-block {
+    top: 0;
+    right: 0;
+  }
+
+  /* 页脚响应式布局 */
+  .link-box .main-link {
+    margin-left: 10px;
+    flex-direction: column;
+    gap: 42px;
+  }
+
+  .link-box .main-link li {
+    margin: 0 0 18px;
+  }
+
+  .link-box .main-link:first-child {
+    padding-left: unset;
+  }
+
+  .link-box .other-link {
+    padding: 15px 25px;
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1200px) {
+  .nav ul li {
+    margin-right: 40px;
+  }
+
+  .menu label input:checked + .menu .hamburger {
+    left: 129vw;
+  }
+
+  .link-box .main-link:first-child {
+    padding-left: 40px;
+  }
+}
