@@ -4,7 +4,7 @@
       <div class="main-link">
         <div class="link-item first">
           <ul>
-            <li class="title">Aurora community</li>
+            <li class="title">community</li>
             <li><a href="#">link</a></li>
             <li><a href="#">link</a></li>
           </ul>
@@ -47,7 +47,7 @@
             <a href="#">User agreement</a>
             <a href="#">DMCA</a>
           </div>
-          <div>copyright: aurora community developer.</div>
+          <div>copyright: community developer.</div>
         </div>
         <div class="right">sns icon</div>
       </div>
@@ -56,7 +56,7 @@
 </template>
 <script>
 export default {
-  name: 'Footer', // 组件名称
+  name: 'Footer', 
 }
 </script>
 <style>
