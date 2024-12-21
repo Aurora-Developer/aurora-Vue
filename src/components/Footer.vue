@@ -2,39 +2,14 @@
   <footer>
     <div class="link-box">
       <div class="main-link">
-        <div class="link-item first">
+        <!-- 使用 v-for 动态渲染 link-item 和其中的 a 标签 -->
+        <div v-for="(item, index) in footerLinks" :key="index" class="link-item">
           <ul>
-            <li class="title">community</li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-          </ul>
-        </div>
-        <div class="link-item">
-          <ul>
-            <li class="title">title</li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-          </ul>
-        </div>
-        <div class="link-item">
-          <ul>
-            <li class="title">title</li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-          </ul>
-        </div>
-        <div class="link-item">
-          <ul>
-            <li class="title">title</li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
-            <li><a href="#">link</a></li>
+            <li class="title">{{ item.title }}</li>
+            <!-- 渲染每个链接 -->
+            <li v-for="(link, linkIndex) in item.links" :key="linkIndex">
+              <a :href="link.url">{{ link.text }}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -42,10 +17,10 @@
         <div class="left">
           <div>Language: English</div>
           <div>
-            <a href="#">Privacy policy</a>
-            <a href="#">Cookie policy</a>
-            <a href="#">User agreement</a>
-            <a href="#">DMCA</a>
+            <!-- 动态渲染额外的链接 -->
+            <a v-for="(link, index) in additionalLinks" :key="index" :href="link.url">{{
+              link.text
+            }}</a>
           </div>
           <div>copyright: community developer.</div>
         </div>
@@ -55,8 +30,15 @@
   </footer>
 </template>
 <script>
+import { footerLinks, additionalLinks } from '../data/footerData'
 export default {
-  name: 'Footer', 
+  name: 'Footer',
+  data() {
+    return {
+      footerLinks,
+      additionalLinks,
+    }
+  },
 }
 </script>
 <style>

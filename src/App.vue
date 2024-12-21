@@ -9,9 +9,9 @@
 
 <script>
 // import { RouterView } from 'vue-router'
-import Cookies from './components/cookies.vue'
-import Footer from './components/footer.vue'
-import Nav from './components/nav.vue'
+import Cookies from './components/Cookies.vue'
+import Footer from './components/Footer.vue'
+import Nav from './components/Nav.vue'
 
 export default {
   name: 'App',

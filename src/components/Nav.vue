@@ -8,25 +8,17 @@
           <span class="hamburger"></span>
         </span>
         <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a href="#">Work</a>
+          <li v-for="(item, index) in hamburger" :key="index">
+            <a :href="item.href">{{ item.text }}</a>
           </li>
         </ul>
       </label>
     </div>
     <div class="nav w">
       <ul>
-        <li><a href="#">home</a></li>
-        <li><a href="#">home</a></li>
-        <li><a href="#">home</a></li>
-        <li><a href="#">home</a></li>
-        <li><a href="#">home</a></li>
+        <li v-for="(item, index) in navLinks" :key="index">
+          <a :href="item.href">{{ item.text }}</a>
+        </li>
       </ul>
     </div>
   </header>
@@ -176,7 +168,16 @@ header#nav {
 <script>
 export default {
   name: 'Nav', // 组件名称
+  setup() {
+    return {
+      navLinks, // 将数据暴露给模板
+      hamburger,
+    }
+  },
 }
+
+import { navLinks } from '../data/navData' // 导入导航数据
+import { hamburger } from '../data/navData'
 
 let prevScroll = window.scrollY
 window.onscroll = function () {

@@ -6,7 +6,7 @@ main {
 
 /* banner */
 .banner {
-  height: 710px;
+  height: 100vh;
   position: relative;
   background-size: cover;
   background-image: url(../images/banner.jpg);
@@ -179,7 +179,6 @@ main {
 
 /* introduce */
 .introduce {
-  margin-top: 88px;
   padding: 80px 0;
 }
 
