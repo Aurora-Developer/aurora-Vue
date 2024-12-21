@@ -6,5 +6,5 @@ export const appData = {
     version: '1.0.0',
     updateTime: '2024-12-21',
   },
-  buttons: [{ id: 1, text: '点击下载', action: 'downloadApp' }],
+  buttons: [{ id: 1, text: '点击下载', action: 'redirect', url: 'https://example.com' }],
 }

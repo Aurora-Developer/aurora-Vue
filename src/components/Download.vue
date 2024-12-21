@@ -21,7 +21,7 @@
           v-for="button in appData.buttons"
           :key="button.id"
           class="download-btn"
-          @click="handleAction(button.action)"
+          @click="handleAction(button)"
         >
           {{ button.text }}
         </a>
@@ -52,9 +52,11 @@ export default {
     }
   },
   methods: {
-    handleAction(action) {
-      if (action === 'downloadApp') {
-        console.log('下载应用...')
+    handleAction(button) {
+      if (button.action === 'redirect' && button.url) {
+        window.location.href = button.url
+      } else {
+        console.error('无效操作或未指定URL')
       }
     },
   },

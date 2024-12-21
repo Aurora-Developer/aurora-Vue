@@ -1,7 +1,6 @@
 <template lang="">
   <header class="glass" id="nav">
     <div class="menu">
-      <!-- <div class="menu-block"></div> -->
       <label>
         <input type="checkbox" />
         <span class="menu">
@@ -23,7 +22,6 @@
     </div>
   </header>
 </template>
-
 <style>
 /* 顶部导航部分 */
 header#nav {
@@ -35,7 +33,6 @@ header#nav {
 }
 
 .menu {
-  /* background: #66ffcc; */
   padding-left: 48px;
   z-index: 2;
 }
@@ -49,7 +46,7 @@ header#nav {
   height: 150px;
   background: rgba(255, 149, 52, 0.6);
   backdrop-filter: blur(15px);
-  border-radius: 50% 50% 50% 50%;
+  border-radius: 50%;
   transition: 0.5s ease-in-out;
   box-shadow:
     0 0 0 0 rgba(255, 149, 52, 0.3),
@@ -117,9 +114,17 @@ header#nav {
   transform: rotate(90deg);
   top: 0;
 }
-
+.menu label input + .menu + ul {
+  transform: translate(200%, -50%); /* 向右移动 */
+  width: 80%; /* 缩小宽度 */
+  transition:
+    transform 0.5s ease,
+    width 0.5s ease; /* 添加平滑过渡 */
+}
 .menu label input:checked + .menu + ul {
   opacity: 1;
+  transform: translate(0, -50%);
+  width: 100%;
 }
 
 .menu label ul {
