@@ -115,15 +115,22 @@ header#nav {
   top: 0;
 }
 .menu label input + .menu + ul {
-  transform: translate(200%, -50%); /* 向右移动 */
+  transform: translate(50%, -100%); /* 向右移动 */
   width: 80%; /* 缩小宽度 */
   transition:
     transform 0.5s ease,
     width 0.5s ease; /* 添加平滑过渡 */
 }
+
+menu label {
+  position: relative;
+}
 .menu label input:checked + .menu + ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   opacity: 1;
-  transform: translate(0, -50%);
+  transform: translate(0%, 100%);
   width: 100%;
 }
 
