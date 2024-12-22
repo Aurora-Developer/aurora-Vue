@@ -23,6 +23,7 @@ button {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Noto Sans SC';
+  color: #ffebeb;
 }
 
 h1,
@@ -47,7 +48,7 @@ li {
 
 a {
   text-decoration: none;
-  color: #fff;
+  color: #ffebeb;
 }
 
 a:hover {

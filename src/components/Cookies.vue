@@ -67,7 +67,7 @@ export default {
   padding: 1.6rem 3rem;
   border: 3px solid black;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(55, 55, 55, 0.6);
   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
   z-index: 3;
   transition: all 2s; /* 平滑动画 */
@@ -86,7 +86,8 @@ export default {
 }
 
 .btn {
-  color: inherit;
+  color: black;
+  font-weight: bold;
   font-family: inherit;
   font-size: inherit;
   background: white;
