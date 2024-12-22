@@ -9,13 +9,12 @@ import './assets/styles/common.css' // 引入 common CSS 文件
 
 // 创建路由实例
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        { path: '/', name: 'Home', component: Home },
-        { path: '/download', name: 'Download', component: Download },
-    ],
+  history: createWebHistory(),
+  routes: [
+    { path: '/', name: 'Home', component: Home },
+    { path: '/download', name: 'Download', component: Download },
+  ],
 })
 
 // 挂载 Vue 应用
 createApp(App).use(router).mount('#app')
-
