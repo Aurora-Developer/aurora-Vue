@@ -130,4 +130,4 @@ export default {
 }
 </script>
 
-<style src="..\assets\styles\home.css" scoped></style>
+<style src="@/assets/styles/home.css" scoped></style>
