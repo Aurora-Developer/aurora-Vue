@@ -33,7 +33,7 @@
           当前版本：<span>{{ appData.versionInfo.version }}</span>
         </p>
         <p>
-          更新时间：<span>{{ appData.versionInfo.updateTime }}</span>
+          同步数据时间：<span>{{ appData.versionInfo.updateTime }}</span>
         </p>
       </div>
     </div>
@@ -44,7 +44,6 @@
       <div class="changelog-content">
         <div v-for="(log, index) in appData.changelog" :key="index" class="changelog-item">
           <h3>{{ log.version }}</h3>
-          <p>{{ log.date }}</p>
           <ul>
             <li v-for="(item, idx) in log.changes" :key="idx">{{ item }}</li>
           </ul>
@@ -63,7 +62,7 @@ export default {
         title: '深空我的世界盒子',
         description: 'Minecraft综合社区&辅助工具',
         versionInfo: {
-          version: '1.0.0',
+          version: '0.0.0',
           updateTime: '2024-12-21',
         },
         buttons: [
@@ -71,14 +70,14 @@ export default {
             id: 1,
             text: '点击下载',
             action: 'redirect',
-            url: 'https://example.com',
+            url: 'https://www.aurora-sky.top/download/app-release-alpha-1-2.apk',
           },
         ],
         changelog: [
           {
-            version: '1.0.0',
+            version: '0.0.0',
             date: '2024-03-20',
-            changes: ['初始版本发布', '基础功能实现', '界面优化完成'],
+            changes: ['', '', ''],
           },
         ],
       },
@@ -100,32 +99,35 @@ export default {
     handleUpdateData(data) {
       if (!data) return
 
+      // 获取当前日期
+      const currentDate = new Date()
+        .toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+        .replace(/\//g, '-') // 将 2024/03/21 格式转换为 2024-03-21
+
       // 更新下载链接和版本信息
       this.appData.buttons[0].url = data.url || this.appData.buttons[0].url
       this.appData.versionInfo.version = data.version || this.appData.versionInfo.version
-      this.appData.versionInfo.updateTime = data.time || this.appData.versionInfo.updateTime
+      this.appData.versionInfo.updateTime = currentDate // 使用当前日期
 
       // 更新更新日志
       if (data.description) {
-        const decodedText = this.decodeUnicode(data.description)
-        // 按句号、感叹号等标点符号分割
-        const changes = decodedText
-          .split(/[。！]/)
-          .map((line) => line.trim())
-          .filter((line) => line.length > 0)
-          .map((line) => line + '。') // 为每行末尾加回句号
+        const decodedDesc = this.decodeUnicode(data.description)
+        const changes = decodedDesc
+          .replace(/\\r\\n/g, '\n')
+          .split('\n')
+          .filter((line) => line.trim())
 
         this.appData.changelog = [
           {
             version: data.version || this.appData.versionInfo.version,
-            date: data.time || this.appData.versionInfo.updateTime,
+            date: currentDate, // 使用当前日期
             changes: changes,
           },
         ]
-
-        // 调试用
-        console.log('原始文本:', decodedText)
-        console.log('处理后的更新日志:', changes)
       }
     },
   },
