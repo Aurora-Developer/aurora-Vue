@@ -1,48 +1,52 @@
 // pageData.js
 export const bannerData = {
-  title: '深空我的世界社区',
-  subtitle: '一支凭借着对深空的热爱，而执着追求的公益性团队',
+  title: 'Aurora Minecraft 社区',
+  subtitle: '致力于打造专业、开放的 Minecraft 生态系统的技术社区',
 }
 
 export const newsData = [
-  { time: '2023.09:28', content: '深空全新官网，统一风格，焕然一新', url: '#' },
-  { time: '2023.10:28', content: '深空联机内核，现已进行内部测试', url: '#' },
-  { time: '2023.09:20', content: '深空联机模块即将开启内测申请', url: '#' },
-  { time: '2023.09:28', content: '深空即将新增开发者计划，为开发者提供更方便的功能', url: '#' },
+  { time: '2023.09.28', content: 'Aurora 官网全新改版上线，提供更优质的用户体验', url: '#' },
+  { time: '2023.10.28', content: 'Aurora 联机内核系统进入内部测试阶段', url: '#' },
+  { time: '2023.09.20', content: 'Aurora 联机模块测试资格申请通道即将开放', url: '#' },
+  { time: '2023.09.28', content: 'Aurora 开发者计划正式启动，提供全方位技术支持', url: '#' },
 ]
 
 export const introduceData = {
-  title: 'introduce',
-  subTitle: 'here is title',
-  content: 'here is content here is content here is content here is content here is content',
-  imgUrl: '', // You can add an image URL here if needed
+  title: '社区介绍',
+  subTitle: '专业的 Minecraft 技术社区',
+  content:
+    'Aurora 是一个致力于推动 Minecraft 生态发展的专业技术社区。我们整合优质资源，提供全方位的技术支持与服务，打造开放、创新的游戏开发环境。',
+  imgUrl: '',
   additionalText: [
     {
-      title: '一个年轻而富有活力的初创团队',
-      description: '在时间的沉淀下，即便是沧海一粟也可能绽放惊人动力',
+      title: '创新驱动的技术团队',
+      description: '以专业的技术能力和创新思维，推动 Minecraft 生态系统的发展与进步',
     },
     {
-      title: '一个凭借热爱而精益求精的团队',
-      description: '尽管我们是微弱的星光，当数量繁多时总能照亮深空',
+      title: '追求卓越的开发社区',
+      description: '汇聚优秀开发者，共同打造高质量的 Minecraft 周边生态',
     },
   ],
   moreContent:
-    '我们是我的世界(Minecraft)的一款社区内容+功能辅助的游戏团队，我们坚守初衷，不断学习与进步; 我们听取意见，不断优化与完善; 我们与用户交流，不断提高自身。',
+    'Aurora 是一个专注于 Minecraft 游戏生态的技术社区，我们致力于提供专业的社区服务和技术支持。通过持续创新和用户反馈，不断优化产品体验，推动社区健康发展。',
 }
 
 export const developerData = {
-  title: 'developer',
-  subTitle: 'here is title',
-  content: 'here is content here is content here is content here is content here is content',
+  title: '开发者中心',
+  subTitle: '为开发者提供专业支持',
+  content:
+    '加入 Aurora 开发者社区，获取完整的技术文档、开发工具与专业的技术支持，助力您的开发项目成功。',
 }
 
 export const downloadData = {
-  title: 'download',
-  content: 'here is content here is content here is content here is content here is content',
+  title: '下载中心',
+  content:
+    '获取最新版本的 Aurora 客户端，体验优化的性能与丰富的功能。我们提供稳定可靠的更新支持，确保您获得最佳的使用体验。',
 }
 
 export const updateLogData = {
-  subtitle: 'here is subtitle',
-  title: 'here is title',
-  content: 'here is content here is content here is content here is content here is content',
+  subtitle: '开发者计划',
+  title: '技术创新中心',
+  content:
+    '加入 Aurora 开发者计划，您将获得完整的技术支持体系、专业的开发资源以及活跃的技术社区。我们致力于为开发者提供最佳的开发环境，推动 Minecraft 生态的创新发展。',
 }

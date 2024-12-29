@@ -80,24 +80,94 @@
 
     <!-- download -->
     <section class="download">
-      <div class="window">
-        <h1>{{ downloadData.title }}</h1>
-        <div class="title">download</div>
-        <div class="content">{{ downloadData.content }}</div>
-        <button>download</button>
+      <div class="window glass">
+        <div class="download-content">
+          <div class="left">
+            <div class="download-header">
+              <div class="subtitle">MINECRAFT</div>
+              <h1>{{ downloadData.title }}</h1>
+            </div>
+            <div class="version-info">
+              <div class="version">
+                <span class="label">最新版本</span>
+                <span class="number">v2.0.1</span>
+              </div>
+              <div class="update-time">
+                <span class="label">更新时间</span>
+                <span class="time">2024-01-20</span>
+              </div>
+              <div class="platform">
+                <span class="label">支持平台</span>
+                <span class="platforms">Windows / MacOS</span>
+              </div>
+            </div>
+            <div class="content">{{ downloadData.content }}</div>
+            <div class="download-features">
+              <div class="feature">
+                <div class="feature-icon grass"></div>
+                <span>稳定运行</span>
+              </div>
+              <div class="feature">
+                <div class="feature-icon tnt"></div>
+                <span>持续更新</span>
+              </div>
+              <div class="feature">
+                <div class="feature-icon chest"></div>
+                <span>资源丰富</span>
+              </div>
+            </div>
+            <div class="download-buttons">
+              <button class="primary-btn">
+                <i class="download-icon"></i>
+                立即下载
+              </button>
+              <button class="secondary-btn">更新日志</button>
+            </div>
+          </div>
+          <div class="right">
+            <div class="minecraft-scene">
+              <div class="minecraft-block floating"></div>
+              <div class="minecraft-block-shadow"></div>
+              <div class="particles"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- update-log -->
-    <section class="log orange">
+    <!-- 开发者计划 (原 log) -->
+    <section class="dev-program orange">
       <div class="content w">
         <div class="left">
-          <div class="subtitle">{{ updateLogData.subtitle }}</div>
-          <h1>{{ updateLogData.title }}</h1>
-          <div class="content">{{ updateLogData.content }}</div>
-          <button>HERE IS CONTENT</button>
+          <div class="program-header">
+            <div class="subtitle">AURORA</div>
+            <h1>开发者计划</h1>
+          </div>
+          <div class="program-content">
+            <p class="description">{{ updateLogData.content }}</p>
+            <div class="features">
+              <div class="feature-item">
+                <div class="feature-icon"></div>
+                <h3>专业技术支持</h3>
+                <p>获取 Aurora 团队提供的专业技术咨询与支持服务</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"></div>
+                <h3>开发资源共享</h3>
+                <p>获取完整的技术文档、SDK 及开发工具支持</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"></div>
+                <h3>开发者社区</h3>
+                <p>加入专业的开发者社区，参与技术交流与分享</p>
+              </div>
+            </div>
+            <button class="join-btn">申请加入开发者计划</button>
+          </div>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <div class="program-image"></div>
+        </div>
       </div>
     </section>
   </main>

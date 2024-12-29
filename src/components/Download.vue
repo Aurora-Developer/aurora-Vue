@@ -1,5 +1,6 @@
 <template>
   <div class="background"></div>
+  <div class="background-overlay"></div>
 
   <!-- 主内容区域 -->
   <main class="main-content">

@@ -2,21 +2,22 @@
   <header class="glass" id="nav">
     <div class="menu">
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" ref="menuCheckbox" />
         <span class="menu">
           <span class="hamburger"></span>
         </span>
-        <ul>
+        <ul class="hamburger-menu">
           <li v-for="(item, index) in hamburger" :key="index">
-            <a :href="item.href">{{ item.text }}</a>
+            <a :href="item.href" @click="closeMenu">{{ item.text }}</a>
           </li>
         </ul>
+        <div class="menu-overlay" @click="closeMenu"></div>
       </label>
     </div>
     <div class="nav w">
       <ul>
         <li v-for="(item, index) in navLinks" :key="index">
-          <a :href="item.href">{{ item.text }}</a>
+          <a :href="item.href" class="nav-link">{{ item.text }}</a>
         </li>
       </ul>
     </div>
@@ -30,6 +31,9 @@ header#nav {
   width: 100%;
   z-index: 1;
   transition: all 0.3s;
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(255, 149, 52, 0.1);
 }
 
 .menu {
@@ -44,7 +48,7 @@ header#nav {
   z-index: 100;
   width: 150px;
   height: 150px;
-  background: rgba(255, 149, 52, 0.6);
+  background: rgba(255, 149, 52, 0.2);
   backdrop-filter: blur(15px);
   border-radius: 50%;
   transition: 0.5s ease-in-out;
@@ -90,11 +94,10 @@ header#nav {
 }
 
 .menu label input:checked + .menu {
+  background: rgba(18, 18, 18, 0.95);
   box-shadow:
-    0 0 0 100vw rgba(0, 0, 0),
-    0 0 0 100vh rgba(255, 149, 52, 0.3);
-  background: rgba(251, 148, 51, 0.7);
-  backdrop-filter: blur(15px);
+    0 0 0 100vw rgba(18, 18, 18, 0.95),
+    0 0 0 100vh rgba(255, 149, 52, 0.1);
   height: 140vh;
   width: 140vw;
   border-radius: 0;
@@ -124,14 +127,17 @@ header#nav {
 
 menu label {
   position: relative;
+  z-index: 201;
 }
 .menu label input:checked + .menu + ul {
   position: absolute;
-  top: 50%;
+  top: 30vh;
   left: 50%;
   opacity: 1;
-  transform: translate(0%, 100%);
+  transform: translateX(-50%);
   width: 100%;
+  text-align: center;
+  pointer-events: auto;
 }
 
 .menu label ul {
@@ -139,11 +145,13 @@ menu label {
   font-weight: bolder;
   z-index: 200;
   position: absolute;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
+  top: 30vh;
+  left: 50%;
+  transform: translateX(-50%);
   opacity: 0;
   transition: 0.25s 0.2s ease-in-out;
+  width: 100%;
+  pointer-events: none;
 }
 
 .menu label a {
@@ -162,46 +170,148 @@ menu label {
   text-align: center;
 }
 
-.nav ul li {
-  display: inline-flex;
-  padding: 10px 10px 5px;
-  margin-right: 115px;
-  border-bottom: 3px solid #ffb26a;
+.nav {
+  padding: 4px 40px 0; /* 增加左右内边距 */
 }
 
-.nav ul li a {
-  font-size: 18px;
+.nav ul li {
+  margin-right: 50px; /* 增加项目之间的间距 */
+  padding: 8px 12px; /* 调整内边距 */
+}
+
+.nav ul li {
+  display: inline-flex;
+  padding: 8px 15px;
+  margin-right: 40px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav ul li:hover {
+  border-bottom: 2px solid #ff952e;
+}
+
+.nav-link {
+  color: #e6e6e6;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ff952e;
+}
+
+/* 汉堡菜单链接样式 */
+.hamburger-menu li {
+  margin-bottom: 20px;
   text-align: center;
-  font-weight: 700px;
-  color: #fff;
+}
+
+.hamburger-menu a {
+  color: #e6e6e6;
+  font-size: 24px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.hamburger-menu a:hover {
+  color: #ff952e;
+}
+
+.hamburger-menu a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 50%;
+  background-color: #ff952e;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.hamburger-menu a:hover::after {
+  width: 100%;
+}
+
+/* 添加媒体查询以适应移动设备 */
+@media screen and (max-width: 640px) {
+  .menu label input:checked + .menu + ul {
+    transform: translate(-50%, 20%);
+  }
+
+  .menu label ul {
+    width: 90%;
+  }
+
+  .nav {
+    padding: 0 20px; /* 移动端减小内边距 */
+  }
+
+  .nav ul li {
+    margin-right: 30px; /* 移动端减小间距 */
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1200px) {
+  .nav ul li {
+    margin-right: 40px; /* 平板端适中间距 */
+  }
+}
+
+/* 添加遮罩层 */
+.menu label input:checked ~ .menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 199;
 }
 </style>
 
 <script>
-export default {
-  name: 'Nav', // 组件名称
-  setup() {
-    return {
-      navLinks, // 将数据暴露给模板
-      hamburger,
-    }
-  },
-}
-
+import { ref } from 'vue'
 import { navLinks } from '../data/navData' // 导入导航数据
 import { hamburger } from '../data/navData'
 
-let prevScroll = window.scrollY
-window.onscroll = function () {
-  console.log(1)
-  const header = document.querySelector('header')
-  let lastScroll = window.scrollY // 使用 scrollY 获取滚动位置
-  if (prevScroll > lastScroll) {
-    header.style.top = '0px' // 向上滚动，显示 header
-  } else {
-    header.style.top = '-50px' // 向下滚动，隐藏 header
-  }
-  prevScroll = lastScroll // 更新 prevScroll
+export default {
+  name: 'Nav',
+  setup() {
+    const menuCheckbox = ref(null)
+
+    const closeMenu = () => {
+      if (menuCheckbox.value) {
+        setTimeout(() => {
+          menuCheckbox.value.checked = false
+        }, 700)
+      }
+    }
+
+    // 滚动隐藏导航栏
+    let prevScroll = window.scrollY
+    window.onscroll = function () {
+      const header = document.querySelector('header')
+      let lastScroll = window.scrollY
+      if (prevScroll > lastScroll) {
+        header.style.top = '0px'
+      } else {
+        header.style.top = '-50px'
+      }
+      prevScroll = lastScroll
+    }
+
+    return {
+      navLinks,
+      hamburger,
+      closeMenu,
+      menuCheckbox,
+    }
+  },
 }
 </script>
 <style lang=""></style>

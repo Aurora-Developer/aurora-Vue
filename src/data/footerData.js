@@ -1,45 +1,35 @@
 // footerData.js
 export const footerLinks = [
   {
-    title: 'community',
+    title: '关于我们',
     links: [
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
+      { text: '关于', url: '#/about' },
+      { text: '团队', url: '#/team' },
+      { text: '联系我们', url: '#/contact' },
     ],
   },
   {
-    title: 'title',
+    title: '资源',
     links: [
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
+      { text: '下载', url: '#/download' },
+      { text: '开发', url: '#/dev' },
+      { text: '新闻', url: '#/news' },
     ],
   },
   {
-    title: 'title',
+    title: '法律',
     links: [
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-    ],
-  },
-  {
-    title: 'title',
-    links: [
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
-      { text: 'link', url: '#' },
+      { text: '隐私政策', url: '#/privacy' },
+      { text: 'Cookie政策', url: '#/cookies' },
+      { text: '用户协议', url: '#/agreement' },
+      { text: 'DMCA', url: '#/dmca' },
     ],
   },
 ]
 
 export const additionalLinks = [
-  { text: 'Privacy policy', url: '#' },
-  { text: 'Cookie policy', url: '#' },
-  { text: 'User agreement', url: '#' },
-  { text: 'DMCA', url: '#' },
+  { text: '隐私政策', url: '#/privacy' },
+  { text: 'Cookie政策', url: '#/cookies' },
+  { text: '用户协议', url: '#/agreement' },
+  { text: 'DMCA', url: '#/dmca' },
 ]

@@ -12,6 +12,7 @@
 import Cookies from './components/Cookies.vue'
 import Footer from './components/Footer.vue'
 import Nav from './components/Nav.vue'
+import News from './components/News.vue'
 
 export default {
   name: 'App',

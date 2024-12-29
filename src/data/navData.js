@@ -1,17 +1,25 @@
 // 顶部导航
 export const navLinks = [
-  { text: '主页', href: '#/' },
-  { text: '论坛', href: '#/bbs' },
-  { text: '新闻', href: '#/news' },
-  { text: '开发', href: '#/dev' },
-  { text: '下载App', href: '.#/download' },
+  { text: '首页', href: '#/' },
+  { text: '社区', href: '#/bbs' },
+  { text: '资讯', href: '#/news' },
+  { text: '开发者', href: '#/dev' },
+  { text: '下载中心', href: '#/download' },
 ]
 
 // 菜单
 export const hamburger = [
-  { text: '主页', href: '#/' },
-  { text: '论坛', href: '#/bbs' },
-  { text: '新闻', href: '#/news' },
-  { text: '开发', href: '#/dev' },
-  { text: '下载App', href: '.#/download' },
+  { text: '首页', href: '#/' },
+  { text: '社区', href: '#/bbs' },
+  { text: '资讯', href: '#/news' },
+  { text: '开发者', href: '#/dev' },
+  { text: '下载中心', href: '#/download' },
+]
+
+// 页脚链接
+export const footerLinks = [
+  { text: '隐私政策', href: '#/privacy' },
+  { text: 'Cookie 政策', href: '#/cookies' },
+  { text: '用户协议', href: '#/agreement' },
+  { text: 'DMCA 政策', href: '#/dmca' },
 ]
