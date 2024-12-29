@@ -94,7 +94,7 @@
   flex: 1;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 80px 0;
   position: relative;
@@ -113,7 +113,7 @@
   justify-content: center;
   width: calc(100% - 40px);
   max-width: 500px;
-  margin: 0 20px;
+  margin: 0 auto 40px auto;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -263,6 +263,7 @@
     padding: 30px 20px;
     margin: auto 15px;
     width: calc(100% - 30px);
+    margin-bottom: 20px;
   }
 
   .app-title {
@@ -286,5 +287,115 @@
 
   body {
     padding-top: 60px;
+  }
+}
+
+.changelog-container {
+  background: rgba(21, 21, 21, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 40px);
+  max-width: 500px;
+  margin: 0 auto;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.changelog-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.changelog-title {
+  color: #cecece;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.changelog-content {
+  max-height: 300px;
+  overflow-y: auto;
+  color: #666;
+}
+
+.changelog-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.changelog-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.changelog-item h3 {
+  color: #cecece;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.changelog-item p {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.changelog-item ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.changelog-item li {
+  color: #666;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.changelog-item li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #666;
+}
+
+/* 自定义滚动条样式 */
+.changelog-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.changelog-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.changelog-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.changelog-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .changelog-container {
+    padding: 30px 20px;
+    margin: auto 15px;
+    width: calc(100% - 30px);
+  }
+
+  .changelog-title {
+    font-size: 20px;
   }
 }
