@@ -1,0 +1,49 @@
+name: Build and Deploy # 工作流名称
+on:
+  push: # 当代码被推送到仓库时触发工作流
+    branches:
+      - main # 只在推送到 main 分支时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 环境运行
+
+    steps:
+      - name: Checkout code # 检出代码
+        uses: actions/checkout@v4 # 使用 checkout 操作拉取代码
+
+      - name: Setup Node.js # 设置 Node.js 环境
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22' # 设置 Node.js 版本赖
+
+      - name: Install pnpm # 安装 pnpm
+        run: npm install -g pnpm # 使用 npm 安装 pnpm
+
+      - name: Install dependencies
+        run: pnpm install # 使用 pnpm 安装所有依赖
+
+      - name: Build project # 构建项目
+        run: pnpm run build # 使用 Vue 的标准构建命令
+
+      - name: Upload to server # 上传到服务器
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }} # 部署私钥
+          SERVER_IP: ${{ secrets.SERVER_IP }} # 服务器 IP，从 GitHub Secrets 获取
+        run: |
+          # 创建 ~/.ssh 目录
+          mkdir -p ~/.ssh
+          # 添加私钥文件，移除多余字符
+          echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # 自动接收并添加服务器主机密钥
+          ssh-keyscan -p 22 -H $SERVER_IP >> ~/.ssh/known_hosts
+          # 测试 SSH 连接
+          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "echo 'SSH connection successful'"
+          # 删除特定文件
+          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "rm -f /www/wwwroot/www/index.html /www/wwwroot/www/favicon.ico"
+          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "rm -rf /www/wwwroot/www/assets"
+          # 打印调试信息
+          echo "Uploading to server with IP: $SERVER_IP"
+          # 将内容上传到服务器的指定目录，不使用 --delete 参数
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa" dist/ chenskiro@$SERVER_IP:/www/wwwroot/www
