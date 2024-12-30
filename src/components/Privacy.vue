@@ -2,17 +2,15 @@
   <div class="privacy-container">
     <div class="privacy-content">
       <div class="header-section">
-        <div class="icon">
-          <i class="fas fa-lock"></i>
-        </div>
+        <Icon icon="mdi:shield-lock" class="icon" />
         <h1>隐私政策</h1>
       </div>
+      <div class="intro-box">
+        <p class="intro-text">
+          我们非常重视您的隐私保护。本隐私政策旨在帮助您了解我们如何收集、使用和保护您的个人信息。请仔细阅读以下内容。
+        </p>
+      </div>
       <div class="content">
-        <div class="intro-box">
-          <p class="intro-text">
-            我们重视您的隐私，并致力于保护您的个人信息。请仔细阅读以下内容，了解我们如何收集、使用和保护您的数据。
-          </p>
-        </div>
         <section>
           <h2>1. 信息收集</h2>
           <p>我们收集的信息包括：</p>
@@ -70,8 +68,13 @@
 </template>
 
 <script>
+import { Icon } from '@iconify/vue'
+
 export default {
   name: 'Privacy',
+  components: {
+    Icon,
+  },
 }
 </script>
 

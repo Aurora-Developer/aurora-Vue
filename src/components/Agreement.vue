@@ -2,20 +2,18 @@
   <div class="agreement-container">
     <div class="agreement-content">
       <div class="header-section">
-        <div class="icon">
-          <i class="fas fa-file-contract"></i>
-        </div>
+        <Icon icon="mdi:file-document-check" class="icon" />
         <h1>用户协议</h1>
       </div>
-      <div class="content">
-        <div class="agreement-intro">
-          <div class="stamp">
-            <span>用户协议</span>
-          </div>
-          <p class="intro-text">
-            本协议是您与我们之间的法律文件，请在使用我们的服务之前仔细阅读以下条款。使用我们的服务即表示您同意接受这些条款的约束。
-          </p>
+      <div class="agreement-intro">
+        <p class="intro-text">
+          欢迎使用我们的服务。本协议是您与我们之间的法律协议，规定了您使用我们服务时的权利和义务。请仔细阅读以下内容。
+        </p>
+        <div class="stamp">
+          <Icon icon="mdi:check-decagram" class="stamp-icon" />
         </div>
+      </div>
+      <div class="content">
         <section>
           <h2>1. 服务条款</h2>
           <p>欢迎使用我们的服务。通过访问和使用本网站，您同意遵守以下条款：</p>
@@ -83,8 +81,13 @@
 </template>
 
 <script>
+import { Icon } from '@iconify/vue'
+
 export default {
   name: 'Agreement',
+  components: {
+    Icon,
+  },
 }
 </script>
 
@@ -141,17 +144,17 @@ h1 {
   right: 2rem;
   top: 50%;
   transform: translateY(-50%) rotate(15deg);
-  border: 2px solid #ff6b00;
-  border-radius: 50%;
   width: 80px;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff6b00;
-  font-weight: bold;
-  opacity: 0.8;
   animation: stamp 1s ease-out;
+}
+
+.stamp-icon {
+  font-size: 80px;
+  color: rgba(255, 107, 0, 0.8);
 }
 
 @keyframes stamp {
@@ -161,7 +164,7 @@ h1 {
   }
   100% {
     transform: translateY(-50%) rotate(15deg) scale(1);
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 

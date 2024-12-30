@@ -10,6 +10,10 @@ import Privacy from '@/components/Privacy.vue'
 import CookiesPolicy from '@/components/CookiesPolicy.vue'
 import Agreement from '@/components/Agreement.vue'
 import DMCA from '@/components/DMCA.vue'
+import About from '@/components/About.vue'
+import Development from '@/components/Development.vue'
+import NotFound from '@/components/404.vue'
+import { initScrollReveal, addScrollRevealClass } from '@/utils/scrollReveal'
 
 import '@/assets/styles/global.css' // 引入全局 CSS 文件
 import '@/assets/styles/common.css' // 引入 common CSS 文件
@@ -26,8 +30,25 @@ const router = createRouter({
     { path: '/cookies', name: 'Cookies', component: CookiesPolicy },
     { path: '/agreement', name: 'Agreement', component: Agreement },
     { path: '/dmca', name: 'DMCA', component: DMCA },
+    { path: '/about', name: 'About', component: About },
+    { path: '/development', name: 'Development', component: Development },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   ],
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
 
-// 挂载 Vue 应用
-createApp(App).use(router).mount('#app')
+// 在路由变化后执行
+router.afterEach(() => {
+  // 确保页面滚动到顶部后再初始化滚动显示效果
+  window.scrollTo(0, 0)
+  setTimeout(() => {
+    addScrollRevealClass()
+    initScrollReveal()
+  }, 100)
+})
+
+const app = createApp(App)
+app.use(router)
+app.mount('#app')

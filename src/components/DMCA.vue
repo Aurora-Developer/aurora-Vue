@@ -1,12 +1,16 @@
 <template>
   <div class="dmca-container">
-    <div class="header-section">
-      <div class="icon">
-        <i class="fas fa-copyright"></i>
-      </div>
-      <h1>DMCA 政策</h1>
-    </div>
     <div class="dmca-content">
+      <div class="header-section">
+        <Icon icon="mdi:copyright" class="icon" />
+        <h1>DMCA</h1>
+      </div>
+      <div class="dmca-intro">
+        <p class="intro-text">
+          我们尊重知识产权，并致力于保护创作者的权益。如果您认为您的作品在未经授权的情况下被使用，请按照以下流程提交DMCA投诉。
+        </p>
+        <div class="copyright-symbol">©</div>
+      </div>
       <div class="content">
         <div class="dmca-intro">
           <div class="copyright-symbol">©</div>
@@ -72,8 +76,13 @@
 </template>
 
 <script>
+import { Icon } from '@iconify/vue'
+
 export default {
   name: 'DMCA',
+  components: {
+    Icon,
+  },
 }
 </script>
 
@@ -84,7 +93,7 @@ export default {
   background-color: rgb(26, 26, 26);
   padding-top: 50px;
   color: #ffffff;
-  margin-top: 50px;
+  margin-top: -20px;
   position: relative;
   z-index: 0;
 }
@@ -230,5 +239,9 @@ strong {
   display: block;
   height: 50px;
   width: 100%;
+}
+
+nav {
+  background-color: black;
 }
 </style>

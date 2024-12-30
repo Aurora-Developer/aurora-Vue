@@ -26,30 +26,62 @@ main {
 }
 
 .banner .text {
+  position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 720px;
+  max-width: 623px;
   border-radius: 18px;
   padding: 2rem;
   gap: 1.5rem;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: none;
+  border: none;
+  box-shadow: none;
   transition: all 0.3s ease;
+}
+
+.banner .text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.banner .text:hover::before {
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .banner .text:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .banner-title .title h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
   line-height: 1.2;
   margin-bottom: 1rem;
 }
 
 .banner-title .subtitle {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
   line-height: 1.4;
 }
 
@@ -330,42 +362,53 @@ main {
 
 .introduce .text li {
   display: flex;
-  gap: 2rem;
-  padding: 1rem;
-  border-radius: 12px;
+  gap: 1.5rem;
+  padding: 1.2rem;
+  border-radius: 8px;
+  background: rgba(26, 26, 26, 0.8);
+  border: 2px solid rgba(255, 138, 20, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .introduce .text li:hover {
   transform: translateY(-5px);
+  border-color: rgba(255, 138, 20, 0.4);
+  box-shadow: 0 5px 15px rgba(255, 138, 20, 0.15);
 }
 
 .introduce .text li .icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   background: linear-gradient(142deg, #ff8a14 10.39%, #ffa149 97.29%);
-  border-radius: 12px;
+  border-radius: 8px;
   flex-shrink: 0;
+  position: relative;
+  border: 2px solid rgba(255, 138, 20, 0.4);
 }
 
 .introduce .text li .text {
   background: none;
-  padding: 1.5rem;
+  padding: 0;
   flex: 1;
-  background: rgba(255, 138, 20, 0.1);
-  border-radius: 12px;
+  width: auto;
+  margin: 0;
 }
 
 .introduce .text li .text p:first-child {
   color: #ff8a14;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .introduce .text li .text p:last-child {
   color: #e0e0e0;
-  line-height: 1.8;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 /* introduce -end */
@@ -582,6 +625,7 @@ main {
   font-size: 1.1rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  color: #fff !important;
 }
 
 .download .primary-btn {
@@ -808,8 +852,20 @@ main {
   }
 
   .banner .text {
-    padding: 1.5rem;
+    padding: 2rem;
     width: 100%;
+  }
+
+  .banner-title .title h1 {
+    font-size: 2.3rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .banner-title .subtitle {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    word-break: break-word;
   }
 
   .news-content ul {

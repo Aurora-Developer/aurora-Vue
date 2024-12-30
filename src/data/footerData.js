@@ -4,8 +4,8 @@ export const footerLinks = [
     title: '关于我们',
     links: [
       { text: '关于', url: '#/about' },
-      { text: '团队', url: '#/team' },
-      { text: '联系我们', url: '#/contact' },
+      { text: '团队', url: '#/development' },
+      { text: '联系我们', url: '#/development' },
     ],
   },
   {

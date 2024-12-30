@@ -19,7 +19,7 @@
         <p>加载中...</p>
       </div>
       <template v-else>
-        <div v-for="news in newsList" :key="news.id" class="news-item">
+        <div v-for="news in filteredNewsList" :key="news.id" class="news-item">
           <div class="news-image" v-if="news.image">
             <img :src="news.image" :alt="news.title" />
           </div>
@@ -34,13 +34,13 @@
         </div>
       </template>
 
-      <div v-if="!loading && newsList.length === 0" class="no-data">暂无相关新闻</div>
+      <div v-if="!loading && filteredNewsList.length === 0" class="no-data">暂无相关新闻</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 // 新闻分类数据
 const categories = ref([
@@ -55,16 +55,7 @@ const currentCategory = ref('all')
 // 新闻列表数据
 const newsList = ref([
   {
-    id: 1,
-    title: 'Aurora发布重要更新',
-    summary: 'Aurora平台最新版本发布，带来多项重要功能更新和性能优化...',
-    image: '/src/assets/images/news1.jpg',
-    date: '2024-01-20',
-    categoryName: '产品更新',
-    category: 'product',
-  },
-  {
-    id: 1,
+    id: 2,
     title: 'Aurora发布重要更新',
     summary: 'Aurora平台最新版本发布，带来多项重要功能更新和性能优化...',
     image: '/src/assets/images/news1.jpg',
@@ -74,11 +65,20 @@ const newsList = ref([
   },
   {
     id: 2,
-    title: '2024年度技术展望',
-    summary: '展望2024年技术发展趋势，探讨AI、云计算等领域的最新进展...',
+    title: 'Aurora发布重要更新',
+    summary: 'Aurora平台最新版本发布，带来多项重要功能更新和性能优化...',
+    image: '/src/assets/images/news1.jpg',
+    date: '2024-01-20',
+    categoryName: '产品更新',
+    category: 'product',
+  },
+  {
+    id: 1,
+    title: '2024年度回顾',
+    summary: '回顾2024年我们的发展趋势，探讨我们开发的最新进展...',
     image: '/src/assets/images/news2.jpg',
     date: '2024-01-18',
-    categoryName: '行业资讯',
+    categoryName: '最新动态',
     category: 'industry',
   },
 ])
@@ -106,6 +106,17 @@ const loadNews = async (categoryId) => {
     loading.value = false
   }
 }
+
+const filteredNewsList = computed(() => {
+  if (currentCategory.value === 'all') {
+    return newsList.value
+  } else if (currentCategory.value === 'company') {
+    return newsList.value.filter((news) => news.categoryName === '最新动态')
+  } else if (currentCategory.value === 'product') {
+    return newsList.value.filter((news) => news.categoryName === '产品更新')
+  }
+  return []
+})
 
 onMounted(() => {
   loadNews(currentCategory.value)

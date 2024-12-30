@@ -101,6 +101,7 @@ header#nav {
   height: 140vh;
   width: 140vw;
   border-radius: 0;
+  z-index: 9999;
 }
 
 .menu label input:checked + .menu .hamburger {
@@ -138,6 +139,7 @@ menu label {
   width: 100%;
   text-align: center;
   pointer-events: auto;
+  z-index: 10000;
 }
 
 .menu label ul {

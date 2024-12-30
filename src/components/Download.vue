@@ -4,7 +4,7 @@
 
   <!-- 主内容区域 -->
   <main class="main-content">
-    <div class="content-container">
+    <div class="content-container scroll-reveal">
       <!-- App Logo -->
       <div class="logo-container">
         <img src="https://www.aurora-sky.top/icon.png" alt="App Logo" class="app-logo" />
@@ -22,10 +22,16 @@
           v-for="button in appData.buttons"
           :key="button.id"
           class="download-btn"
+          :class="{ loading: loading }"
           @click="handleAction(button)"
         >
-          {{ button.text }}
+          {{ loading ? '加载中...' : button.text }}
         </a>
+      </div>
+
+      <!-- 错误提示 -->
+      <div v-if="error" class="error-message">
+        {{ error }}
       </div>
 
       <!-- 动态生成版本信息 -->
@@ -39,11 +45,15 @@
       </div>
     </div>
 
-    <!-- 新增的更新日志区域（垂直排列） -->
-    <div class="changelog-container">
+    <!-- 更新日志区域 -->
+    <div class="changelog-container scroll-reveal" id="changelog">
       <h2 class="changelog-title">更新日志</h2>
       <div class="changelog-content">
-        <div v-for="(log, index) in appData.changelog" :key="index" class="changelog-item">
+        <div
+          v-for="(log, index) in appData.changelog"
+          :key="index"
+          class="changelog-item scroll-reveal"
+        >
           <h3>{{ log.version }}</h3>
           <ul>
             <li v-for="(item, idx) in log.changes" :key="idx">{{ item }}</li>
@@ -78,14 +88,18 @@ export default {
           {
             version: '0.0.0',
             date: '2024-03-20',
-            changes: ['', '', ''],
+            changes: ['暂无更新内容'],
           },
         ],
       },
+      loading: false,
+      error: null,
     }
   },
   methods: {
     handleAction(button) {
+      if (this.loading) return
+
       if (button.action === 'redirect' && button.url) {
         window.location.href = button.url
       } else {
@@ -107,12 +121,12 @@ export default {
           month: '2-digit',
           day: '2-digit',
         })
-        .replace(/\//g, '-') // 将 2024/03/21 格式转换为 2024-03-21
+        .replace(/\//g, '-')
 
       // 更新下载链接和版本信息
       this.appData.buttons[0].url = data.url || this.appData.buttons[0].url
       this.appData.versionInfo.version = data.version || this.appData.versionInfo.version
-      this.appData.versionInfo.updateTime = currentDate // 使用当前日期
+      this.appData.versionInfo.updateTime = currentDate
 
       // 更新更新日志
       if (data.description) {
@@ -125,24 +139,46 @@ export default {
         this.appData.changelog = [
           {
             version: data.version || this.appData.versionInfo.version,
-            date: currentDate, // 使用当前日期
-            changes: changes,
+            date: currentDate,
+            changes: changes.length ? changes : ['暂无更新内容'],
           },
         ]
       }
     },
+    async fetchAppInfo() {
+      if (this.loading) return
+
+      this.loading = true
+      this.error = null
+
+      try {
+        const response = await fetch('https://api.aurora-sky.top/update.php', {
+          timeout: 5000,
+          headers: {
+            Accept: 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json()
+        if (data) {
+          this.handleUpdateData(data)
+        } else {
+          throw new Error('Invalid data format')
+        }
+      } catch (error) {
+        console.error('获取应用信息失败:', error)
+        this.error = error.message
+      } finally {
+        this.loading = false
+      }
+    },
   },
   mounted() {
-    fetch('https://api.aurora-sky.top/update.php', {
-      timeout: 5000,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.handleUpdateData(data)
-      })
-      .catch((error) => {
-        console.warn('数据获取失败:', error)
-      })
+    this.fetchAppInfo()
   },
 }
 </script>

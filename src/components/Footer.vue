@@ -16,7 +16,7 @@
       <div class="other-link">
         <div class="left">
           <div class="language-selector">
-            <i class="fas fa-globe"></i>
+            <Icon icon="mdi:earth" />
             <span>语言：简体中文</span>
           </div>
           <div class="policy-links">
@@ -26,7 +26,7 @@
               :href="link.url"
               class="policy-link"
             >
-              <i class="fas" :class="getLinkIcon(link.text)"></i>
+              <Icon :icon="getLinkIcon(link.text)" class="policy-icon" />
               {{ link.text }}
             </a>
           </div>
@@ -36,9 +36,12 @@
           </div>
         </div>
         <div class="right">
-          <a href="#" class="sns-icon"><i class="fab fa-discord"></i></a>
-          <a href="#" class="sns-icon"><i class="fab fa-github"></i></a>
-          <a href="#" class="sns-icon"><i class="fab fa-bilibili"></i></a>
+          <a href="https://github.com/Aurora-Developer/" class="sns-icon"
+            ><Icon icon="ri:github-fill"
+          /></a>
+          <a href="https://space.bilibili.com/647566583/" class="sns-icon"
+            ><Icon icon="ri:bilibili-fill"
+          /></a>
         </div>
       </div>
     </div>
@@ -46,8 +49,13 @@
 </template>
 <script>
 import { footerLinks, additionalLinks } from '../data/footerData'
+import { Icon } from '@iconify/vue'
+
 export default {
   name: 'Footer',
+  components: {
+    Icon,
+  },
   data() {
     return {
       footerLinks,
@@ -58,12 +66,12 @@ export default {
   methods: {
     getLinkIcon(text) {
       const iconMap = {
-        'Privacy Policy': 'fa-shield-alt',
-        'Cookie Policy': 'fa-cookie-bite',
-        'User Agreement': 'fa-file-contract',
-        DMCA: 'fa-copyright',
+        隐私政策: 'ri:shield-keyhole-fill',
+        Cookie政策: 'mdi:cookie',
+        用户协议: 'ri:file-text-fill',
+        DMCA: 'ri:copyright-fill',
       }
-      return iconMap[text] || 'fa-file'
+      return iconMap[text] || 'ri:file-fill'
     },
   },
 }

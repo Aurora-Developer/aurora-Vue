@@ -434,3 +434,28 @@
     font-size: 16px;
   }
 }
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease-out;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.download-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff4d4f;
+  margin-top: 10px;
+  text-align: center;
+  padding: 8px;
+  background-color: rgba(255, 77, 79, 0.1);
+  border-radius: 4px;
+}

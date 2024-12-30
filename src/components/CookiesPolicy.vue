@@ -3,7 +3,7 @@
     <div class="cookies-content">
       <div class="header-section">
         <div class="icon">
-          <i class="fas fa-cookie-bite"></i>
+          <Icon icon="material-symbols:cookie" class="icon" />
         </div>
 
         <h1>Cookie 政策</h1>
@@ -11,7 +11,9 @@
 
       <div class="content">
         <div class="cookie-info-box">
-          <div class="cookie-icon">🍪</div>
+          <div class="cookie-icon">
+            <Icon icon="material-symbols:cookie-outline" width="48" height="48" />
+          </div>
 
           <p class="cookie-intro">
             Cookie 能帮助我们提供更好的服务体验。继续使用我们的网站，即表示您同意我们使用 Cookie。
@@ -91,8 +93,13 @@
 </template>
 
 <script>
+import { Icon } from '@iconify/vue'
+
 export default {
   name: 'CookiesPolicy',
+  components: {
+    Icon,
+  },
 }
 </script>
 
