@@ -40,10 +40,9 @@ jobs:
           ssh-keyscan -p 22 -H $SERVER_IP >> ~/.ssh/known_hosts
           # 测试 SSH 连接
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "echo 'SSH connection successful'"
-          # 删除特定文件
-          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "rm -f /www/wwwroot/www/index.html /www/wwwroot/www/favicon.ico"
-          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "rm -rf /www/wwwroot/www/assets"
           # 打印调试信息
           echo "Uploading to server with IP: $SERVER_IP"
-          # 将内容上传到服务器的指定目录，不使用 --delete 参数
+          # 执行清理脚本
+          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "sh /www/wwwroot/www/cleanup.sh"
+          # 将内容上传到服务器的指定目录
           rsync -avz -e "ssh -i ~/.ssh/id_rsa" dist/ chenskiro@$SERVER_IP:/www/wwwroot/www
