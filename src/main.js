@@ -14,6 +14,7 @@ import About from '@/components/About.vue'
 import Development from '@/components/Development.vue'
 import NotFound from '@/components/404.vue'
 import { initScrollReveal, addScrollRevealClass } from '@/utils/scrollReveal'
+import i18n from './i18n'
 
 import '@/assets/styles/global.css' // 引入全局 CSS 文件
 import '@/assets/styles/common.css' // 引入 common CSS 文件
@@ -51,4 +52,5 @@ router.afterEach(() => {
 
 const app = createApp(App)
 app.use(router)
+app.use(i18n)
 app.mount('#app')

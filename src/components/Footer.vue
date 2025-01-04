@@ -2,22 +2,50 @@
   <footer>
     <div class="link-box">
       <div class="main-link">
-        <!-- 使用 v-for 动态渲染 link-item 和其中的 a 标签 -->
-        <div v-for="(item, index) in footerLinks" :key="index" class="link-item">
+        <div class="link-item" v-for="(section, key) in footerSections" :key="key">
           <ul>
-            <li class="title">{{ item.title }}</li>
-            <!-- 渲染每个链接 -->
-            <li v-for="(link, linkIndex) in item.links" :key="linkIndex">
-              <a :href="link.url">{{ link.text }}</a>
+            <li class="title">
+              <transition name="fade" mode="out-in">
+                <span :key="$i18n.locale">{{ $t(`footer.${key}.title`) }}</span>
+              </transition>
+            </li>
+            <li v-for="(link, linkIndex) in section.links" :key="linkIndex">
+              <a :href="link.url">
+                <transition name="fade" mode="out-in">
+                  <span :key="$i18n.locale">{{ $t(`footer.${key}.links.${link.key}`) }}</span>
+                </transition>
+              </a>
             </li>
           </ul>
         </div>
       </div>
       <div class="other-link">
         <div class="left">
-          <div class="language-selector">
+          <div class="language-selector" @click="toggleLanguageDropdown" ref="langSelector">
             <Icon icon="mdi:earth" />
-            <span>语言：简体中文</span>
+            <transition name="fade" mode="out-in">
+              <span :key="$i18n.locale">{{ $t('footer.language') }}</span>
+            </transition>
+            <Icon
+              :icon="isLanguageDropdownOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'"
+              class="dropdown-icon"
+            />
+
+            <!-- 语言选择下拉菜单 -->
+            <transition name="dropdown">
+              <div v-if="isLanguageDropdownOpen" class="language-dropdown">
+                <div
+                  v-for="lang in availableLanguages"
+                  :key="lang.code"
+                  class="language-option"
+                  :class="{ active: $i18n.locale === lang.code }"
+                  @click="changeLanguage(lang.code)"
+                >
+                  <span>{{ lang.name }}</span>
+                  <Icon v-if="$i18n.locale === lang.code" icon="mdi:check" class="check-icon" />
+                </div>
+              </div>
+            </transition>
           </div>
           <div class="policy-links">
             <a
@@ -26,13 +54,23 @@
               :href="link.url"
               class="policy-link"
             >
-              <Icon :icon="getLinkIcon(link.text)" class="policy-icon" />
-              {{ link.text }}
+              <Icon :icon="getLinkIcon(link.key)" class="policy-icon" />
+              <transition name="fade" mode="out-in">
+                <span :key="$i18n.locale">{{ $t(`footer.legal.links.${link.key}`) }}</span>
+              </transition>
             </a>
           </div>
           <div class="copyright">
-            <span>© {{ currentYear }} Aurora Community.</span>
-            <span class="developer">Made with ❤️ by Community Developers</span>
+            <transition name="fade" mode="out-in">
+              <span :key="$i18n.locale">{{
+                $t('footer.copyright.rights', { year: currentYear })
+              }}</span>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <span :key="$i18n.locale" class="developer">{{
+                $t('footer.copyright.developer')
+              }}</span>
+            </transition>
           </div>
         </div>
         <div class="right">
@@ -48,30 +86,102 @@
   </footer>
 </template>
 <script>
-import { footerLinks, additionalLinks } from '../data/footerData'
 import { Icon } from '@iconify/vue'
+import { useI18n } from 'vue-i18n'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 export default {
   name: 'Footer',
   components: {
     Icon,
   },
+  setup() {
+    const { locale } = useI18n()
+    const isLanguageDropdownOpen = ref(false)
+    const langSelector = ref(null)
+
+    const availableLanguages = [
+      { code: 'zh-CN', name: '简体中文' },
+      { code: 'zh-TW', name: '繁體中文' },
+    ]
+
+    const toggleLanguageDropdown = (event) => {
+      event.stopPropagation()
+      isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
+    }
+
+    const changeLanguage = (langCode) => {
+      locale.value = langCode
+      isLanguageDropdownOpen.value = false
+    }
+
+    // 点击外部关闭下拉菜单
+    const handleClickOutside = (event) => {
+      if (langSelector.value && !langSelector.value.contains(event.target)) {
+        isLanguageDropdownOpen.value = false
+      }
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', handleClickOutside)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('click', handleClickOutside)
+    })
+
+    return {
+      isLanguageDropdownOpen,
+      availableLanguages,
+      toggleLanguageDropdown,
+      changeLanguage,
+      langSelector,
+    }
+  },
   data() {
     return {
-      footerLinks,
-      additionalLinks,
       currentYear: new Date().getFullYear(),
+      footerSections: {
+        about: {
+          links: [
+            { key: 'about', url: '#/about' },
+            { key: 'team', url: '#/development' },
+            { key: 'contact', url: '#/development' },
+          ],
+        },
+        resources: {
+          links: [
+            { key: 'download', url: '#/download' },
+            { key: 'dev', url: '#/dev' },
+            { key: 'news', url: '#/news' },
+          ],
+        },
+        legal: {
+          links: [
+            { key: 'privacy', url: '#/privacy' },
+            { key: 'cookies', url: '#/cookies' },
+            { key: 'agreement', url: '#/agreement' },
+            { key: 'dmca', url: '#/dmca' },
+          ],
+        },
+      },
+      additionalLinks: [
+        { key: 'privacy', url: '#/privacy' },
+        { key: 'cookies', url: '#/cookies' },
+        { key: 'agreement', url: '#/agreement' },
+        { key: 'dmca', url: '#/dmca' },
+      ],
     }
   },
   methods: {
-    getLinkIcon(text) {
+    getLinkIcon(key) {
       const iconMap = {
-        隐私政策: 'ri:shield-keyhole-fill',
-        Cookie政策: 'mdi:cookie',
-        用户协议: 'ri:file-text-fill',
-        DMCA: 'ri:copyright-fill',
+        privacy: 'ri:shield-keyhole-fill',
+        cookies: 'mdi:cookie',
+        agreement: 'ri:file-text-fill',
+        dmca: 'ri:copyright-fill',
       }
-      return iconMap[text] || 'ri:file-fill'
+      return iconMap[key] || 'ri:file-fill'
     },
   },
 }
@@ -209,14 +319,72 @@ footer {
 }
 
 .language-selector {
-  display: flex;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: rgba(255, 140, 0, 0.1);
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-weight: 500;
+  user-select: none;
+  white-space: nowrap;
+  min-width: 140px;
 }
 
-.language-selector i {
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  border-radius: 6px;
+  min-width: 100%;
+  padding: 4px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.language-option:hover {
+  background: rgba(255, 140, 0, 0.1);
   color: #ff8c00;
+}
+
+.language-option.active {
+  background: rgba(255, 140, 0, 0.15);
+  color: #ff8c00;
+}
+
+.check-icon {
+  position: absolute;
+  right: 12px;
+  color: #ff8c00;
+}
+
+/* 下拉菜单动画 */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: all 0.3s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .policy-links {
@@ -273,8 +441,38 @@ footer {
     justify-content: center;
   }
 
-  .language-selector {
-    justify-content: center;
+  .language-dropdown {
+    left: 50%;
+    transform: translateX(-50%);
   }
+
+  .dropdown-enter-from,
+  .dropdown-leave-to {
+    transform: translateY(-10px) translateX(-50%);
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-icon {
+  color: #ff8c00;
+  font-size: 18px;
 }
 </style>

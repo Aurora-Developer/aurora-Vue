@@ -7,8 +7,23 @@
           <span class="hamburger"></span>
         </span>
         <ul class="hamburger-menu">
-          <li v-for="(item, index) in hamburger" :key="index">
-            <a :href="item.href" @click="closeMenu">{{ item.text }}</a>
+          <li>
+            <a href="#/" @click="closeMenu">{{ $t('nav.home') }}</a>
+          </li>
+          <li>
+            <a href="#/development" @click="closeMenu">{{ $t('nav.community') }}</a>
+          </li>
+          <li>
+            <a href="#/news" @click="closeMenu">{{ $t('nav.news') }}</a>
+          </li>
+          <li>
+            <a href="#/dev" @click="closeMenu">{{ $t('nav.developer') }}</a>
+          </li>
+          <li>
+            <a href="#/download" @click="closeMenu">{{ $t('nav.download') }}</a>
+          </li>
+          <li>
+            <a href="#/about" @click="closeMenu">{{ $t('nav.about') }}</a>
           </li>
         </ul>
         <div class="menu-overlay" @click="closeMenu"></div>
@@ -16,8 +31,23 @@
     </div>
     <div class="nav w">
       <ul>
-        <li v-for="(item, index) in navLinks" :key="index">
-          <a :href="item.href" class="nav-link">{{ item.text }}</a>
+        <li>
+          <a href="#/" class="nav-link">{{ $t('nav.home') }}</a>
+        </li>
+        <li>
+          <a href="#/development" class="nav-link">{{ $t('nav.community') }}</a>
+        </li>
+        <li>
+          <a href="#/news" class="nav-link">{{ $t('nav.news') }}</a>
+        </li>
+        <li>
+          <a href="#/dev" class="nav-link">{{ $t('nav.developer') }}</a>
+        </li>
+        <li>
+          <a href="#/download" class="nav-link">{{ $t('nav.download') }}</a>
+        </li>
+        <li>
+          <a href="#/about" class="nav-link">{{ $t('nav.about') }}</a>
         </li>
       </ul>
     </div>
@@ -279,8 +309,6 @@ menu label {
 
 <script>
 import { ref, onMounted } from 'vue'
-import { navLinks } from '../data/navData' // 导入导航数据
-import { hamburger } from '../data/navData'
 
 export default {
   name: 'Nav',
@@ -316,8 +344,6 @@ export default {
     }
 
     return {
-      navLinks,
-      hamburger,
       closeMenu,
       menuCheckbox,
     }

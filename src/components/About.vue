@@ -2,17 +2,15 @@
   <div class="about-container">
     <!-- 关于我们部分 -->
     <section class="about-section scroll-reveal">
-      <h1>关于我们</h1>
+      <h1>{{ $t('about.title') }}</h1>
       <div class="content scroll-reveal">
-        <p>
-          Aurora是一个致力于为Minecraft玩家提供优质游戏体验的团队。我们专注于开发创新的游戏功能，提供稳定可靠的服务，让每位玩家都能享受到最佳的游戏乐趣。
-        </p>
+        <p>{{ $t('about.description') }}</p>
       </div>
     </section>
 
     <!-- 团队介绍部分 -->
     <section class="team-section scroll-reveal">
-      <h2>我们的团队</h2>
+      <h2>{{ $t('about.team.title') }}</h2>
       <div class="team-grid">
         <div class="team-member scroll-reveal" v-for="member in teamMembers" :key="member.id">
           <div class="member-avatar">
@@ -27,7 +25,7 @@
 
     <!-- 联系我们部分 -->
     <section class="contact-section scroll-reveal">
-      <h2>联系我们</h2>
+      <h2>{{ $t('about.contact.title') }}</h2>
       <div class="contact-content">
         <div class="contact-info scroll-reveal">
           <div class="contact-item">
@@ -40,10 +38,10 @@
           </div>
         </div>
         <div class="github-feedback scroll-reveal">
-          <p>如果您有任何问题或建议，欢迎在我们的 GitHub 反馈仓库中提出：</p>
+          <p>{{ $t('about.contact.feedback') }}</p>
           <a href="https://github.com/Aurora-Developer/feedback" target="_blank" class="github-btn">
             <i class="fab fa-github"></i>
-            前往 GitHub 反馈
+            {{ $t('about.contact.githubButton') }}
           </a>
         </div>
       </div>
@@ -66,43 +64,25 @@ export default {
         {
           id: 1,
           name: 'chenskiro',
-          role: '网页开发',
-          description: '也就会用个AI',
+          role: this.$t('about.team.members.webDev'),
+          description: this.$t('about.team.members.webDevDesc'),
           icon: 'material-symbols:code',
         },
         {
           id: 2,
           name: 'Pararescue Jumpers',
-          role: 'APP开发',
-          description: ':P',
+          role: this.$t('about.team.members.appDev'),
+          description: this.$t('about.team.members.appDevDesc'),
           icon: 'material-symbols:app-registration',
         },
       ],
-      form: {
-        name: '',
-        email: '',
-        message: '',
-      },
     }
   },
   mounted() {
-    // 初始化滚动显示效果
     setTimeout(() => {
       addScrollRevealClass()
       initScrollReveal()
     }, 100)
-  },
-  methods: {
-    submitForm() {
-      // 这里添加表单提交逻辑
-      console.log('Form submitted:', this.form)
-      // 重置表单
-      this.form = {
-        name: '',
-        email: '',
-        message: '',
-      }
-    },
   },
 }
 </script>

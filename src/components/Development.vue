@@ -4,8 +4,8 @@
       <div class="icon-container">
         <IconifyIcon :icon="currentIcon" class="construction-icon" />
       </div>
-      <h2 class="fade-in">页面建设中</h2>
-      <p class="fade-in-delay">功能即将上线，敬请期待...</p>
+      <h2 class="fade-in">{{ $t('development.title') }}</h2>
+      <p class="fade-in-delay">{{ $t('development.subtitle') }}</p>
     </div>
   </div>
 </template>
@@ -26,7 +26,6 @@ export default {
   },
   computed: {
     currentIcon() {
-      console.log('当前图标:', this.icons[this.currentIconIndex])
       return this.icons[this.currentIconIndex]
     },
   },
@@ -38,7 +37,6 @@ export default {
         const matrix = new DOMMatrix(transform)
         const angle = Math.atan2(matrix.m32, matrix.m33) * (180 / Math.PI)
 
-        // 当旋转到90度或270度时切换图标
         if (
           (Math.abs(angle) > 85 && Math.abs(angle) < 95) ||
           (Math.abs(angle) > 265 && Math.abs(angle) < 275)

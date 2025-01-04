@@ -4,43 +4,35 @@
 
   <!-- 页面通知横幅 -->
   <div class="notice-container">
-    <p class="notice">
-      深空 Aurora 不支持 <i>Minecraft</i> 游戏开发商 Mojang Studios
-      在中国大陆地区的代理版本《我的世界》， 且不对该版本提供任何形式的功能支持
-      <span class="details-toggle" @click="showDetails = true">查看详情</span>
+    <p class="notice" v-if="isMainlandChina">
+      {{ $t('download.notice.main') }}
+      <span class="details-toggle" @click="showDetails = true">{{
+        $t('download.notice.viewDetails')
+      }}</span>
     </p>
 
     <!-- 弹窗组件 -->
-    <div v-if="showDetails" class="modal-overlay" @click.self="showDetails = false">
+    <div
+      v-if="showDetails && isMainlandChina"
+      class="modal-overlay"
+      @click.self="showDetails = false"
+    >
       <div class="modal-content">
         <div class="modal-header">
-          <h3>版本支持说明</h3>
+          <h3>{{ $t('download.modal.title') }}</h3>
           <span class="modal-close" @click="showDetails = false">&times;</span>
         </div>
         <div class="modal-body">
-          <p>
-            作为一个基于 WebSocket 协议开发的第三方工具，深空 Aurora 仅针对 Minecraft
-            基岩版进行开发和优化。我们<span class="highlight-text">不会</span
-            >对中国大陆地区代理版本进行任何形式的开发和适配。
-          </p>
-
-          <p>
-            深空 Aurora 在中国大陆地区代理版本中可能表现出一定的<span class="highlight-text"
-              >兼容性</span
-            >（这源于游戏底层架构的相似性）， 但我们对其运行的有效性和稳定性不承担任何责任。
-          </p>
-
-          <p>我们<span class="highlight-text">明确声明</span>：</p>
-          <p>1. 不推荐用户在中国大陆地区代理版本中使用深空 Aurora；</p>
-          <p>2. 不对使用该版本可能造成的任何影响承担责任。</p>
+          <p>{{ $t('download.modal.content.p1') }}</p>
+          <p>{{ $t('download.modal.content.p2') }}</p>
+          <p>{{ $t('download.modal.content.p3') }}</p>
+          <p>{{ $t('download.modal.content.p4') }}</p>
+          <p>{{ $t('download.modal.content.p5') }}</p>
         </div>
       </div>
     </div>
 
-    <p class="notice">
-      <i>Minecraft</i> ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具，
-      与 Mojang Studios、Microsoft 及其在中国大陆地区的授权代理商均无任何关联
-    </p>
+    <p class="notice">{{ $t('download.notice.trademark') }}</p>
   </div>
 
   <!-- 主内容区域 -->
@@ -51,13 +43,13 @@
         <img src="https://www.aurora-sky.top/icon.png" alt="App Logo" class="app-logo" />
       </div>
 
-      <!-- 动态生成 App 名称 -->
-      <h1 class="app-title">{{ appData.title }}</h1>
+      <!-- App 名称 -->
+      <h1 class="app-title">{{ $t('download.title') }}</h1>
 
-      <!-- 动态生成 App 简介 -->
-      <p class="app-desc">{{ appData.description }}</p>
+      <!-- App 简介 -->
+      <p class="app-desc">{{ $t('download.description') }}</p>
 
-      <!-- 动态生成按钮 -->
+      <!-- 下载按钮 -->
       <div class="btn-container">
         <a
           v-for="button in appData.buttons"
@@ -66,7 +58,7 @@
           :class="{ loading: loading }"
           @click="handleAction(button)"
         >
-          {{ loading ? '加载中...' : button.text }}
+          {{ loading ? $t('download.button.loading') : $t('download.button.download') }}
         </a>
       </div>
 
@@ -75,20 +67,20 @@
         {{ error }}
       </div>
 
-      <!-- 动态生成版本信息 -->
+      <!-- 版本信息 -->
       <div class="version-info">
         <p>
-          当前版本：<span>{{ appData.versionInfo.version }}</span>
+          {{ $t('download.version.current') }}<span>{{ appData.versionInfo.version }}</span>
         </p>
         <p>
-          同步数据时间：<span>{{ appData.versionInfo.updateTime }}</span>
+          {{ $t('download.version.updateTime') }}<span>{{ appData.versionInfo.updateTime }}</span>
         </p>
       </div>
     </div>
 
     <!-- 更新日志区域 -->
     <div class="changelog-container scroll-reveal" id="changelog">
-      <h2 class="changelog-title">更新日志</h2>
+      <h2 class="changelog-title">{{ $t('download.changelog.title') }}</h2>
       <div class="changelog-content">
         <div
           v-for="(log, index) in appData.changelog"
@@ -113,8 +105,6 @@ export default {
       showDetails: false,
       hasShownInitialModal: false,
       appData: {
-        title: '深空我的世界盒子',
-        description: '适用于 Minecraft 的综合社区&辅助工具',
         versionInfo: {
           version: '0.0.0',
           updateTime: '2024-12-21',
@@ -139,30 +129,41 @@ export default {
       error: null,
     }
   },
+  computed: {
+    isMainlandChina() {
+      // 检查当前语言是否为简体中文
+      return this.$i18n.locale === 'zh-CN'
+    },
+  },
   methods: {
     toggleDetails() {
       this.showDetails = !this.showDetails
     },
-    handleAction(button) {
-      if (this.loading) return
-
-      if (button.action === 'redirect' && button.url) {
-        window.location.href = button.url
-      } else {
-        console.error('无效操作或未指定URL')
+    async translateToTraditional(text) {
+      try {
+        const response = await fetch('https://api.zhconvert.org/convert', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            text: text,
+            converter: 'Traditional',
+          }),
+        })
+        const data = await response.json()
+        return data.data.text
+      } catch (error) {
+        console.error('翻译失败:', error)
+        return text
       }
     },
-    decodeUnicode(str) {
-      return str.replace(/\\u([0-9a-fA-F]{4})/g, function (match, grp) {
-        return String.fromCharCode(parseInt(grp, 16))
-      })
-    },
-    handleUpdateData(data) {
+    async handleUpdateData(data) {
       if (!data) return
 
       // 获取当前日期
       const currentDate = new Date()
-        .toLocaleDateString('zh-CN', {
+        .toLocaleDateString(this.$i18n.locale, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
@@ -182,14 +183,34 @@ export default {
           .split('\n')
           .filter((line) => line.trim())
 
+        // 如果当前语言是繁体中文，则翻译更新内容
+        const translatedChanges =
+          this.$i18n.locale === 'zh-TW'
+            ? await Promise.all(changes.map((change) => this.translateToTraditional(change)))
+            : changes
+
         this.appData.changelog = [
           {
             version: data.version || this.appData.versionInfo.version,
             date: currentDate,
-            changes: changes.length ? changes : ['暂无更新内容'],
+            changes: translatedChanges.length ? translatedChanges : ['暂无更新内容'],
           },
         ]
       }
+    },
+    handleAction(button) {
+      if (this.loading) return
+
+      if (button.action === 'redirect' && button.url) {
+        window.location.href = button.url
+      } else {
+        console.error('无效操作或未指定URL')
+      }
+    },
+    decodeUnicode(str) {
+      return str.replace(/\\u([0-9a-fA-F]{4})/g, function (match, grp) {
+        return String.fromCharCode(parseInt(grp, 16))
+      })
     },
     async fetchAppInfo() {
       if (this.loading) return
@@ -224,11 +245,36 @@ export default {
     },
   },
   mounted() {
-    if (!this.hasShownInitialModal) {
+    if (!this.hasShownInitialModal && this.isMainlandChina) {
       this.showDetails = true
       this.hasShownInitialModal = true
     }
     this.fetchAppInfo()
+  },
+  watch: {
+    '$i18n.locale': {
+      async handler(newLocale) {
+        // 如果有现有的更新日志数据，则重新翻译
+        if (
+          this.appData.changelog[0].changes.length > 0 &&
+          this.appData.changelog[0].changes[0] !== '暂无更新内容'
+        ) {
+          const changes = this.appData.changelog[0].changes
+
+          // 如果切换到繁体中文，翻译内容
+          if (newLocale === 'zh-TW') {
+            const translatedChanges = await Promise.all(
+              changes.map((change) => this.translateToTraditional(change)),
+            )
+            this.appData.changelog[0].changes = translatedChanges
+          } else if (newLocale === 'zh-CN') {
+            // 如果切换到简体中文，重新获取原始数据
+            await this.fetchAppInfo()
+          }
+        }
+      },
+      immediate: true,
+    },
   },
 }
 </script>

@@ -4,6 +4,7 @@
     <router-view />
     <Cookies />
     <Footer />
+    <LanguageNotice v-model="showLanguageNotice" />
   </div>
 </template>
 
@@ -14,6 +15,8 @@ import Footer from './components/Footer.vue'
 import Nav from './components/Nav.vue'
 import News from './components/News.vue'
 import { initScrollReveal, addScrollRevealClass } from './utils/scrollReveal'
+import LanguageNotice from './components/LanguageNotice.vue'
+import { ref, onMounted } from 'vue'
 
 export default {
   name: 'App',
@@ -21,6 +24,7 @@ export default {
     Nav, // 注册组件
     Footer,
     Cookies,
+    LanguageNotice,
   },
   mounted() {
     this.initScrollEffects()
@@ -41,6 +45,20 @@ export default {
         this.initScrollEffects()
       }, 100)
     },
+  },
+  setup() {
+    const showLanguageNotice = ref(false)
+
+    onMounted(() => {
+      // 监听语言切换事件
+      window.addEventListener('languageChanged', () => {
+        showLanguageNotice.value = true
+      })
+    })
+
+    return {
+      showLanguageNotice,
+    }
   },
 }
 </script>

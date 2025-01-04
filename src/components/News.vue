@@ -40,13 +40,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 // 新闻分类数据
-const categories = ref([
-  { id: 'all', name: '全部' },
-  { id: 'company', name: '最新动态' },
-  { id: 'product', name: '产品更新' },
+const categories = computed(() => [
+  { id: 'all', name: t('news.categories.all') },
+  { id: 'company', name: t('news.categories.company') },
+  { id: 'product', name: t('news.categories.product') },
 ])
 
 // 当前选中的分类
@@ -60,7 +63,7 @@ const newsList = ref([
     summary: 'Aurora平台最新版本发布，带来多项重要功能更新和性能优化...',
     image: '/src/assets/images/news1.jpg',
     date: '2024-01-20',
-    categoryName: '产品更新',
+    categoryName: computed(() => t('news.categories.product')),
     category: 'product',
   },
   {
@@ -69,7 +72,7 @@ const newsList = ref([
     summary: 'Aurora平台最新版本发布，带来多项重要功能更新和性能优化...',
     image: '/src/assets/images/news1.jpg',
     date: '2024-01-20',
-    categoryName: '产品更新',
+    categoryName: computed(() => t('news.categories.product')),
     category: 'product',
   },
   {
@@ -78,10 +81,61 @@ const newsList = ref([
     summary: '回顾2024年我们的发展趋势，探讨我们开发的最新进展...',
     image: '/src/assets/images/news2.jpg',
     date: '2024-01-18',
-    categoryName: '最新动态',
-    category: 'industry',
+    categoryName: computed(() => t('news.categories.company')),
+    category: 'company',
   },
 ])
+
+// 保存原始新闻数据
+const originalNewsList = ref(null)
+
+// 翻译函数
+const translateToTraditional = async (text) => {
+  try {
+    const response = await fetch('https://api.zhconvert.org/convert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: text,
+        converter: 'Traditional',
+      }),
+    })
+    const data = await response.json()
+    return data.data.text
+  } catch (error) {
+    console.error('翻译失败:', error)
+    return text
+  }
+}
+
+// 监听语言变化
+watch(
+  () => locale.value,
+  async (newLocale) => {
+    if (newLocale === 'zh-TW') {
+      // 只保存和翻译新闻数据
+      if (!originalNewsList.value) {
+        originalNewsList.value = JSON.parse(JSON.stringify(newsList.value))
+      }
+      const translatedNews = await Promise.all(
+        newsList.value.map(async (news) => ({
+          ...news,
+          title: await translateToTraditional(news.title),
+          summary: await translateToTraditional(news.summary),
+        })),
+      )
+      newsList.value = translatedNews
+    } else if (newLocale === 'zh-CN') {
+      // 恢复原始简体内容
+      if (originalNewsList.value) {
+        newsList.value = JSON.parse(JSON.stringify(originalNewsList.value))
+      }
+    }
+  },
+  { immediate: true },
+)
 
 // 加载状态
 const loading = ref(false)
@@ -111,9 +165,9 @@ const filteredNewsList = computed(() => {
   if (currentCategory.value === 'all') {
     return newsList.value
   } else if (currentCategory.value === 'company') {
-    return newsList.value.filter((news) => news.categoryName === '最新动态')
+    return newsList.value.filter((news) => news.category === 'company')
   } else if (currentCategory.value === 'product') {
-    return newsList.value.filter((news) => news.categoryName === '产品更新')
+    return newsList.value.filter((news) => news.category === 'product')
   }
   return []
 })
