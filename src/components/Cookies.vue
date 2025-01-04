@@ -8,14 +8,12 @@
     >
       <h3 class="title">Cookie 使用说明</h3>
       <p class="message">本网站使用 Cookie 来改善您的浏览体验</p>
-      <p class="message">
-        我们使用 Cookie 来：
-        <ul class="cookie-list">
-          <li>记住您的偏好设置</li>
-          <li>分析网站流量和性能</li>
-          <li>提供个性化的内容和服务</li>
-        </ul>
-      </p>
+      <p class="message">我们使用 Cookie 来：</p>
+      <ul class="cookie-list">
+        <li>记住您的偏好设置</li>
+        <li>分析网站流量和性能</li>
+        <li>提供个性化的内容和服务</li>
+      </ul>
       <div class="options">
         <button class="btn" id="allow" @click="allowCookies">接受</button>
         <button class="btn" id="list" @click="showCookiesList">查看详情</button>
@@ -27,8 +25,11 @@
       <h3 class="title">Cookie 详细信息</h3>
       <div class="cookie-intro">
         <p>Cookie 是存储在您设备上的小型文本文件，用于记住您的偏好设置和改善浏览体验。</p>
-        <p>我们使用不同类型的 Cookie 来运行网站和提供服务。您可以在我们的
-          <router-link to="/cookies" class="policy-link" @click="closeDetails">Cookie 政策</router-link>
+        <p>
+          我们使用不同类型的 Cookie 来运行网站和提供服务。您可以在我们的
+          <router-link to="/cookies" class="policy-link" @click="closeDetails"
+            >Cookie 政策</router-link
+          >
           中了解更多信息。
         </p>
       </div>
@@ -56,19 +57,19 @@ export default {
         {
           name: '必要的 Cookie',
           description: '这些 Cookie 对网站的基本功能是必需的，包括记住您的 Cookie 偏好设置。',
-          duration: '会话期间'
+          duration: '会话期间',
         },
         {
           name: '功能性 Cookie',
           description: '这些 Cookie 使我们能够记住您的偏好设置，提供更好的用户体验。',
-          duration: '30天'
+          duration: '30天',
         },
         {
           name: '分析性 Cookie',
           description: '帮助我们了解访问者如何使用网站，以便我们可以改进网站体验。',
-          duration: '90天'
-        }
-      ]
+          duration: '90天',
+        },
+      ],
     }
   },
   methods: {
@@ -82,7 +83,7 @@ export default {
     },
     closeDetails() {
       this.showDetails = false
-    }
+    },
   },
   mounted() {
     // 检查用户是否已接受 Cookies
@@ -97,7 +98,7 @@ export default {
         }, 1600)
       }, 300)
     }
-  }
+  },
 }
 </script>
 
@@ -223,7 +224,7 @@ export default {
 }
 
 .policy-link {
-  color: #4CAF50;
+  color: #4caf50;
   text-decoration: underline;
   font-weight: bold;
 }

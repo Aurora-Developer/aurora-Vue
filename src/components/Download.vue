@@ -2,6 +2,18 @@
   <div class="background"></div>
   <div class="background-overlay"></div>
 
+  <!-- 页面通知横幅 -->
+  <div class="notice-container">
+    <p class="notice">
+      深空 Aurora 不支持 <i>Minecraft</i> 游戏开发商 Mojang Studios
+      在中国大陆地区的代理版本《我的世界》， 且不对该版本提供任何形式的功能支持
+    </p>
+    <p class="notice">
+      <i>Minecraft</i> ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具，
+      与 Mojang Studios、Microsoft 及其在中国大陆地区的授权代理商均无任何关联
+    </p>
+  </div>
+
   <!-- 主内容区域 -->
   <main class="main-content">
     <div class="content-container scroll-reveal">
@@ -71,7 +83,7 @@ export default {
     return {
       appData: {
         title: '深空我的世界盒子',
-        description: 'Minecraft综合社区&辅助工具',
+        description: '适用于 Minecraft 的综合社区&辅助工具',
         versionInfo: {
           version: '0.0.0',
           updateTime: '2024-12-21',

@@ -126,6 +126,36 @@
   position: relative;
 }
 
+/* 页面通知横幅样式 */
+.notice-container {
+  width: 100%;
+  margin-top: 54px;
+}
+
+.notice {
+  width: 100%;
+  color: #b0b0b0;
+  text-align: center;
+  padding: 8px 20px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  background: rgba(21, 21, 21, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+/* 第一个通知 */
+.notice:first-child {
+  background: rgba(25, 25, 30, 0.92);
+  border-bottom: 1px solid rgba(255, 98, 0, 0.2);
+}
+
+/* 第二个通知 */
+.notice:last-child {
+  background: rgba(30, 25, 25, 0.92);
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+}
+
 /* 内容容器 */
 .content-container {
   background: rgba(21, 21, 21, 0.92);

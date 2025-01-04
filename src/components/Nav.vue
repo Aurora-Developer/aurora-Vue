@@ -29,11 +29,12 @@ header#nav {
   position: fixed;
   height: 50px;
   width: 100%;
-  z-index: 1;
+  z-index: 1000;
   transition: all 0.3s;
   background: rgba(18, 18, 18, 0.8);
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(255, 149, 52, 0.1);
+  top: 0;
 }
 
 .menu {
@@ -277,7 +278,7 @@ menu label {
 </style>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { navLinks } from '../data/navData' // 导入导航数据
 import { hamburger } from '../data/navData'
 
@@ -296,6 +297,13 @@ export default {
 
     // 滚动隐藏导航栏
     let prevScroll = window.scrollY
+
+    // 确保导航栏初始显示
+    onMounted(() => {
+      const header = document.querySelector('header')
+      header.style.top = '0px'
+    })
+
     window.onscroll = function () {
       const header = document.querySelector('header')
       let lastScroll = window.scrollY
