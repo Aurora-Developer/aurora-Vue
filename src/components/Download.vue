@@ -7,7 +7,36 @@
     <p class="notice">
       深空 Aurora 不支持 <i>Minecraft</i> 游戏开发商 Mojang Studios
       在中国大陆地区的代理版本《我的世界》， 且不对该版本提供任何形式的功能支持
+      <span class="details-toggle" @click="showDetails = true">查看详情</span>
     </p>
+
+    <!-- 弹窗组件 -->
+    <div v-if="showDetails" class="modal-overlay" @click.self="showDetails = false">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>版本支持说明</h3>
+          <span class="modal-close" @click="showDetails = false">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>
+            作为一个基于 WebSocket 协议开发的第三方工具，深空 Aurora 仅针对 Minecraft
+            基岩版进行开发和优化。我们<span class="highlight-text">不会</span
+            >对中国大陆地区代理版本进行任何形式的开发和适配。
+          </p>
+
+          <p>
+            深空 Aurora 在中国大陆地区代理版本中可能表现出一定的<span class="highlight-text"
+              >兼容性</span
+            >（这源于游戏底层架构的相似性）， 但我们对其运行的有效性和稳定性不承担任何责任。
+          </p>
+
+          <p>我们<span class="highlight-text">明确声明</span>：</p>
+          <p>1. 不推荐用户在中国大陆地区代理版本中使用深空 Aurora；</p>
+          <p>2. 不对使用该版本可能造成的任何影响承担责任。</p>
+        </div>
+      </div>
+    </div>
+
     <p class="notice">
       <i>Minecraft</i> ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具，
       与 Mojang Studios、Microsoft 及其在中国大陆地区的授权代理商均无任何关联
@@ -81,6 +110,8 @@ export default {
   name: 'Download',
   data() {
     return {
+      showDetails: false,
+      hasShownInitialModal: false,
       appData: {
         title: '深空我的世界盒子',
         description: '适用于 Minecraft 的综合社区&辅助工具',
@@ -109,6 +140,9 @@ export default {
     }
   },
   methods: {
+    toggleDetails() {
+      this.showDetails = !this.showDetails
+    },
     handleAction(button) {
       if (this.loading) return
 
@@ -190,6 +224,10 @@ export default {
     },
   },
   mounted() {
+    if (!this.hasShownInitialModal) {
+      this.showDetails = true
+      this.hasShownInitialModal = true
+    }
     this.fetchAppInfo()
   },
 }

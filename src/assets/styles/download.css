@@ -489,3 +489,137 @@
   background-color: rgba(255, 77, 79, 0.1);
   border-radius: 4px;
 }
+
+.details-toggle {
+  display: inline-block;
+  color: #ff8c00;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: color 0.3s ease;
+}
+
+.details-toggle:hover {
+  color: #ffa500;
+  text-decoration: underline;
+}
+
+.notice-details {
+  background: rgba(25, 25, 30, 0.95);
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255, 140, 0, 0.1);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #b0b0b0;
+  text-align: left;
+}
+
+.notice-details p {
+  margin: 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 弹窗样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: rgba(21, 21, 21, 0.95);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  animation: modalFadeIn 0.3s ease;
+}
+
+.modal-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  color: #ff8c00;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-close {
+  color: #888;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px;
+}
+
+.modal-close:hover {
+  color: #ff8c00;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-body p {
+  color: #b0b0b0;
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.modal-body p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .modal-header {
+    padding: 15px 20px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+}
+
+/* 高亮文本样式 */
+.highlight-text {
+  color: #ff8c00;
+  font-weight: 700;
+  padding: 0 2px;
+}
