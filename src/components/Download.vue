@@ -4,6 +4,14 @@
 
   <!-- 页面通知横幅 -->
   <div class="notice-container">
+    <p class="notice">
+      深空 Aurora 不支持 <i>Minecraft</i> 游戏开发商 Mojang Studios
+      在中国大陆地区的代理版本《我的世界》， 且不对该版本提供任何形式的功能支持
+    </p>
+    <p class="notice">
+      <i>Minecraft</i> ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具，
+      与 Mojang Studios、Microsoft 及其在中国大陆地区的授权代理商均无任何关联
+    </p>
     <p class="notice" v-if="isMainlandChina">
       {{ $t('download.notice.main') }}
       <span class="details-toggle" @click="showDetails = true">{{
@@ -102,8 +110,6 @@ export default {
   name: 'Download',
   data() {
     return {
-      showDetails: false,
-      hasShownInitialModal: false,
       appData: {
         versionInfo: {
           version: '0.0.0',
