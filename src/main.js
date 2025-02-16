@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '@/App.vue'
 import Home from '@/components/Home.vue'
 import Download from '@/components/Download.vue'
+import DownloadStargate from '@/components/DownloadStargate.vue'
 import Dev from '@/components/Dev.vue'
 import News from '@/components/News.vue'
 import Privacy from '@/components/Privacy.vue'
@@ -25,6 +26,7 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'Home', component: Home },
     { path: '/download', name: 'Download', component: Download },
+    { path: '/downloadStargate', name: 'DownloadStargate', component: DownloadStargate },
     { path: '/dev', name: 'Dev', component: Dev },
     { path: '/news', name: 'News', component: News },
     { path: '/privacy', name: 'Privacy', component: Privacy },

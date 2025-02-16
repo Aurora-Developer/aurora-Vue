@@ -4,7 +4,8 @@ export default {
     community: '社区',
     news: '资讯',
     developer: '开发者',
-    download: '下载中心',
+    download: '下载社区',
+    downloadStargate: '下载联机工具',
     about: '关于我们',
   },
 
@@ -160,6 +161,11 @@ export default {
     changelog: {
       title: '更新日志',
     },
+  },
+
+  downloadStargate: {
+    title: '深空我的世界联机工具',
+    description: '适用于 Minecraft 的联机工具',
   },
 
   cookies: {

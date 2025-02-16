@@ -12,10 +12,10 @@
       </div>
 
       <!-- App 名称 -->
-      <h1 class="app-title">{{ $t('download.title') }}</h1>
+      <h1 class="app-title">{{ $t('downloadStargate.title') }}</h1>
 
       <!-- App 简介 -->
-      <p class="app-desc">{{ $t('download.description') }}</p>
+      <p class="app-desc">{{ $t('downloadStargate.description') }}</p>
 
       <!-- 下载按钮 -->
       <div class="btn-container">
@@ -80,7 +80,7 @@ export default {
             id: 1,
             text: '点击下载',
             action: 'redirect',
-            url: 'https://www.aurora-sky.top/download/app-release-alpha-1-2.apk',
+            url: 'https://www.aurora-sky.top/download/stargate-alpha-0216.apk',
           },
         ],
         changelog: [
@@ -185,7 +185,7 @@ export default {
       this.error = null
 
       try {
-        const response = await fetch('https://api.aurora-sky.top/update.php', {
+        const response = await fetch('https://multiplayer.aurora-sky.top/version.php', {
           timeout: 5000,
           headers: {
             Accept: 'application/json',
