@@ -4,7 +4,7 @@ export default {
     community: '社区',
     news: '资讯',
     developer: '开发者',
-    download: '下载社区',
+    download: '下载盒子',
     downloadStargate: '下载联机工具',
     about: '关于我们',
   },

@@ -2,6 +2,40 @@
   <div class="background"></div>
   <div class="background-overlay"></div>
 
+  <!-- 页面通知横幅 -->
+  <div class="notice-container">
+    <!-- 所有用户都显示的法律声明 -->
+    <p class="notice">{{ $t('download.notice.trademark') }}</p>
+
+    <!-- 仅中国大陆用户显示的特别提示 -->
+    <p class="notice" v-if="isMainlandChina">
+      {{ $t('download.notice.main') }}
+      <span class="details-toggle" @click="showDetails = true">{{
+        $t('download.notice.viewDetails')
+      }}</span>
+    </p>
+
+    <!-- 弹窗组件 -->
+    <div
+      v-if="showDetails && isMainlandChina"
+      class="modal-overlay"
+      @click.self="showDetails = false"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>{{ $t('download.modal.title') }}</h3>
+          <span class="modal-close" @click="showDetails = false">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>{{ $t('download.modal.content.p1') }}</p>
+          <p>{{ $t('download.modal.content.p2') }}</p>
+          <p>{{ $t('download.modal.content.p3') }}</p>
+          <p>{{ $t('download.modal.content.p4') }}</p>
+          <p>{{ $t('download.modal.content.p5') }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- 主内容区域 -->
   <main class="main-content">
@@ -93,6 +127,8 @@ export default {
       },
       loading: false,
       error: null,
+      showDetails: false,
+      hasShownInitialModal: false,
     }
   },
   computed: {
@@ -211,7 +247,8 @@ export default {
     },
   },
   mounted() {
-    if (!this.hasShownInitialModal && this.isMainlandChina) {
+    // 只有当用户是中国大陆地区且没有显示过弹窗时，才显示弹窗
+    if (this.isMainlandChina && !this.hasShownInitialModal) {
       this.showDetails = true
       this.hasShownInitialModal = true
     }
