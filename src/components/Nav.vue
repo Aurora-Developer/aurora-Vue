@@ -23,9 +23,6 @@
             <a href="#/download" @click="closeMenu">{{ $t('nav.download') }}</a>
           </li>
           <li>
-            <a href="#/downloadStargate" @click="closeMenu">{{ $t('nav.downloadStargate') }}</a>
-          </li>
-          <li>
             <a href="#/about" @click="closeMenu">{{ $t('nav.about') }}</a>
           </li>
         </ul>
@@ -48,9 +45,6 @@
         </li>
         <li>
           <a href="#/download" class="nav-link">{{ $t('nav.download') }}</a>
-        </li>
-        <li>
-          <a href="#/downloadStargate" class="nav-link">{{ $t('nav.downloadStargate') }}</a>
         </li>
         <li>
           <a href="#/about" class="nav-link">{{ $t('nav.about') }}</a>

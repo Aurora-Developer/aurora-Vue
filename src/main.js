@@ -3,8 +3,11 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '@/App.vue'
 import Home from '@/components/Home.vue'
-import Download from '@/components/Download.vue'
-import DownloadStargate from '@/components/DownloadStargate.vue'
+// 移除单独的下载组件引入
+// import Download from '@/components/Download.vue'
+// import DownloadStargate from '@/components/DownloadStargate.vue'
+// 添加新的合并下载组件
+import Downloads from '@/components/Downloads.vue'
 import Dev from '@/components/Dev.vue'
 import News from '@/components/News.vue'
 import Privacy from '@/components/Privacy.vue'
@@ -25,8 +28,10 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', name: 'Home', component: Home },
-    { path: '/download', name: 'Download', component: Download },
-    { path: '/downloadStargate', name: 'DownloadStargate', component: DownloadStargate },
+    // 更新路由，使用新的合并下载组件
+    { path: '/download', name: 'Downloads', component: Downloads },
+    // 为了保持向后兼容，将原有路径重定向到新组件
+    { path: '/downloadStargate', redirect: '/download' },
     { path: '/dev', name: 'Dev', component: Dev },
     { path: '/news', name: 'News', component: News },
     { path: '/privacy', name: 'Privacy', component: Privacy },
