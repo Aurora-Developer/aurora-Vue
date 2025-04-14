@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Aurora 下载中心 - 极简版</title>
+    <!-- 浏览器检测脚本 -->
+    <script src="browser-detect.js"></script>
+    <style>
+      /* 极简样式 - 确保在所有设备上正常显示 */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #111111;
+        color: #eeeeee;
+        font-size: 14px;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+
+      * {
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+
+      .notice {
+        background-color: #222222;
+        padding: 8px;
+        margin: 5px 0;
+        font-size: 12px;
+        text-align: center;
+        border-bottom: 1px solid #333333;
+      }
+
+      .section {
+        margin: 15px 0;
+        border: 1px solid #333333;
+        padding: 10px;
+        background-color: #222222;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 18px;
+        color: #ff8c00;
+        margin: 10px 0;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 16px;
+        margin: 8px 0;
+      }
+
+      .desc {
+        text-align: center;
+        font-size: 12px;
+        margin: 5px 0 10px 0;
+      }
+
+      .download-btn {
+        display: block;
+        background-color: #ff8c00;
+        color: #ffffff;
+        padding: 8px 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 10px auto;
+        max-width: 200px;
+      }
+
+      .version-info {
+        font-size: 12px;
+        text-align: center;
+        margin: 8px 0;
+      }
+
+      .version-value {
+        color: #ff8c00;
+      }
+
+      .changelog {
+        margin-top: 10px;
+        font-size: 12px;
+      }
+
+      .changelog-title {
+        font-size: 14px;
+        color: #ff8c00;
+        margin: 5px 0;
+      }
+
+      ul {
+        margin: 5px 0;
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #222222;
+        border: 1px solid #333333;
+        padding: 10px;
+        width: 90%;
+        max-width: 300px;
+        z-index: 100;
+      }
+
+      .modal-title {
+        font-size: 16px;
+        color: #ff8c00;
+        margin: 5px 0 10px 0;
+        text-align: center;
+      }
+
+      .modal-content {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .modal-close {
+        display: block;
+        text-align: center;
+        background-color: #333333;
+        color: #ffffff;
+        padding: 5px;
+        text-decoration: none;
+        margin-top: 10px;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 99;
+      }
+
+      .link {
+        color: #ff8c00;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      @media (max-width: 320px) {
+        body {
+          font-size: 12px;
+        }
+
+        .notice {
+          font-size: 10px;
+          padding: 5px;
+        }
+
+        .title {
+          font-size: 16px;
+        }
+
+        .download-btn {
+          font-size: 12px;
+          padding: 6px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 通知区域 -->
+      <div class="notice">
+        深空 Aurora 不支持 Minecraft 游戏开发商 Mojang Studios 在中国大陆地区的代理版本《我的世界》
+      </div>
+
+      <div class="notice">
+        Minecraft ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具
+        <span class="link" onclick="showModal()">查看详情</span>
+      </div>
+
+      <!-- 标准版链接 -->
+      <div class="notice" style="background-color: #2c2c2c; padding: 8px 0">
+        <p>兼容模式 - 当前页面正以兼容模式（极简版）显示，无法展示完整功能</p>
+        <a
+          href="https://www.aurora-sky.top/downloads.html"
+          style="color: #ff8c00; font-weight: bold"
+          >查看标准版页面</a
+        >
+      </div>
+
+      <!-- 无JavaScript支持的内容 -->
+      <noscript>
+        <div
+          style="
+            background-color: #222222;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ff8c00;
+            text-align: center;
+          "
+        >
+          <p style="color: #ff8c00; font-size: 16px; margin-bottom: 15px">
+            JavaScript 已禁用或不支持
+          </p>
+          <p>检测到您的浏览器已禁用或不支持JavaScript，为您提供静态下载链接：</p>
+          <p style="margin: 10px 0">
+            <a
+              href="https://www.aurora-sky.top/download/app-release-alpha-1-2.apk"
+              style="
+                display: inline-block;
+                background-color: #ff8c00;
+                color: #ffffff;
+                padding: 8px 15px;
+                text-decoration: none;
+                font-weight: bold;
+                margin: 5px 0;
+              "
+            >
+              下载 Aurora App
+            </a>
+          </p>
+          <p style="margin: 10px 0">
+            <a
+              href="https://www.aurora-sky.top/download/stargate-alpha-0216.apk"
+              style="
+                display: inline-block;
+                background-color: #ff8c00;
+                color: #ffffff;
+                padding: 8px 15px;
+                text-decoration: none;
+                font-weight: bold;
+                margin: 5px 0;
+              "
+            >
+              下载 Aurora Stargate
+            </a>
+          </p>
+        </div>
+      </noscript>
+
+      <!-- JavaScript需要的内容 - 在noscript环境中将被隐藏 -->
+      <script>
+        document.write('<div id="js-content">')
+      </script>
+
+      <!-- Aurora App 下载部分 -->
+      <div class="section">
+        <h2 class="title">深空盒子 下载</h2>
+
+        <h3 class="subtitle">Aurora App</h3>
+
+        <p class="desc">一个美丽的跨平台应用，帮助你探索未知的领域。</p>
+
+        <a
+          href="https://www.aurora-sky.top/download/app-release-alpha-1-2.apk"
+          class="download-btn"
+        >
+          点击下载
+        </a>
+
+        <div class="version-info">
+          当前版本：<span class="version-value" id="app-version">0.0.0</span>
+        </div>
+
+        <div class="version-info">
+          更新时间：<span class="version-value" id="app-date">2024-12-21</span>
+        </div>
+
+        <!-- 更新日志 -->
+        <div class="changelog">
+          <h4 class="changelog-title">更新日志</h4>
+          <div id="app-changelog">
+            <ul>
+              <li>暂无更新内容</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stargate App 下载部分 -->
+      <div class="section">
+        <h2 class="title">联机盒子 下载</h2>
+
+        <h3 class="subtitle">Aurora Stargate</h3>
+
+        <p class="desc">传送门应用，连接不同的世界。</p>
+
+        <a href="https://www.aurora-sky.top/download/stargate-alpha-0216.apk" class="download-btn">
+          点击下载
+        </a>
+
+        <div class="version-info">
+          当前版本：<span class="version-value" id="stargate-version">0.0.0</span>
+        </div>
+
+        <div class="version-info">
+          更新时间：<span class="version-value" id="stargate-date">2024-12-21</span>
+        </div>
+
+        <!-- 更新日志 -->
+        <div class="changelog">
+          <h4 class="changelog-title">更新日志</h4>
+          <div id="stargate-changelog">
+            <ul>
+              <li>暂无更新内容</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.write('</div>')
+      </script>
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="overlay" class="overlay" onclick="hideModal()"></div>
+    <div id="modal" class="modal">
+      <div class="modal-title">版本支持说明</div>
+      <div class="modal-content">
+        <p>
+          作为一个基于 WebSocket 协议开发的第三方工具，深空 Aurora 仅针对 Minecraft
+          基岩版进行开发和优化。我们不会对中国大陆地区代理版本进行任何形式的开发和适配。
+        </p>
+        <p>
+          深空 Aurora
+          在中国大陆地区代理版本中可能表现出一定的兼容性，但我们对其运行的有效性和稳定性不承担任何责任。
+        </p>
+        <p>我们明确声明：</p>
+        <p>不推荐用户在中国大陆地区代理版本中使用深空 Aurora；</p>
+        <p>不对使用该版本可能造成的任何影响承担责任。</p>
+      </div>
+      <a href="javascript:void(0)" class="modal-close" onclick="hideModal()">关闭</a>
+    </div>
+
+    <!-- 极简化脚本 -->
+    <script>
+      // 弹窗控制
+      function showModal() {
+        document.getElementById('overlay').style.display = 'block'
+        document.getElementById('modal').style.display = 'block'
+      }
+
+      function hideModal() {
+        document.getElementById('overlay').style.display = 'none'
+        document.getElementById('modal').style.display = 'none'
+      }
+
+      // 切换到标准版函数
+      function switchToStandardVersion() {
+        // 清除极简版cookie
+        document.cookie = 'useLiteVersion=false; path=/; max-age=2592000'
+        // 跳转到标准版页面
+        window.location.href = 'downloads.html'
+      }
+
+      // 添加"查看标准版"链接的JavaScript事件处理
+      window.addEventListener('load', function () {
+        var stdLink = document.querySelector('.notice a[href="downloads.html"]')
+        if (stdLink) {
+          stdLink.setAttribute('href', 'javascript:void(0)')
+          stdLink.addEventListener('click', switchToStandardVersion)
+        }
+      })
+
+      // 数据获取函数
+      function getAppInfo() {
+        try {
+          // Aurora App 信息
+          var xhr1 = new XMLHttpRequest()
+          xhr1.open('GET', 'https://api.aurora-sky.top/update.php', true)
+          xhr1.timeout = 5000
+          xhr1.onreadystatechange = function () {
+            if (xhr1.readyState === 4) {
+              if (xhr1.status === 200) {
+                try {
+                  var data = JSON.parse(xhr1.responseText)
+                  if (data) {
+                    updateAppData(data, 'app')
+                  }
+                } catch (e) {}
+              }
+            }
+          }
+          xhr1.send()
+
+          // Stargate App 信息
+          var xhr2 = new XMLHttpRequest()
+          xhr2.open('GET', 'https://multiplayer.aurora-sky.top/version.php', true)
+          xhr2.timeout = 5000
+          xhr2.onreadystatechange = function () {
+            if (xhr2.readyState === 4) {
+              if (xhr2.status === 200) {
+                try {
+                  var data = JSON.parse(xhr2.responseText)
+                  if (data) {
+                    updateAppData(data, 'stargate')
+                  }
+                } catch (e) {}
+              }
+            }
+          }
+          xhr2.send()
+        } catch (e) {}
+      }
+
+      // 更新数据函数
+      function updateAppData(data, appType) {
+        // 更新版本号
+        var versionElem = document.getElementById(appType + '-version')
+        if (versionElem && data.version) {
+          versionElem.textContent = data.version
+        }
+
+        // 更新时间
+        var dateElem = document.getElementById(appType + '-date')
+        if (dateElem) {
+          dateElem.textContent = getCurrentDate()
+        }
+
+        // 更新更新日志
+        if (data.description) {
+          var changelogElem = document.getElementById(appType + '-changelog')
+          if (changelogElem) {
+            var decodedDesc = decodeUnicode(data.description)
+            var changes = decodedDesc
+              .replace(/\\r\\n/g, '\n')
+              .split('\n')
+              .filter(function (line) {
+                return line.trim()
+              })
+
+            var changelogHTML = '<ul>'
+
+            if (changes.length) {
+              for (var i = 0; i < changes.length; i++) {
+                changelogHTML += '<li>' + changes[i] + '</li>'
+              }
+            } else {
+              changelogHTML += '<li>暂无更新内容</li>'
+            }
+
+            changelogHTML += '</ul>'
+            changelogElem.innerHTML = changelogHTML
+          }
+        }
+      }
+
+      // 辅助函数
+      function decodeUnicode(str) {
+        return str.replace(/\\u([0-9a-fA-F]{4})/g, function (match, grp) {
+          return String.fromCharCode(parseInt(grp, 16))
+        })
+      }
+
+      function getCurrentDate() {
+        var date = new Date()
+        var year = date.getFullYear()
+        var month = (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1)
+        var day = (date.getDate() < 10 ? '0' : '') + date.getDate()
+        return year + '-' + month + '-' + day
+      }
+
+      // 页面加载函数
+      if (window.addEventListener) {
+        window.addEventListener('load', getAppInfo)
+      } else if (window.attachEvent) {
+        window.attachEvent('onload', getAppInfo)
+      } else {
+        window.onload = getAppInfo
+      }
+    </script>
+  </body>
+</html>

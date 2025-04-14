@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="format-detection" content="telephone=no" />
@@ -12,6 +12,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>Aurora 下载中心</title>
+    <!-- 浏览器检测脚本 - 为老旧设备自动跳转到极简版 -->
+    <script src="browser-detect.js"></script>
     <!--[if lt IE 9]>
       <script src="https://cdn.bootcdn.net/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcdn.net/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -20,6 +22,11 @@
       /* 基础样式重置，确保在更老的浏览器中正常工作 */
       * {
         -webkit-tap-highlight-color: transparent;
+        word-wrap: break-word; /* 添加自动换行 */
+        overflow-wrap: break-word; /* 现代浏览器的自动换行 */
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
       }
       /* 基本样式 */
       body {
@@ -30,6 +37,46 @@
         background-color: #0c0c0c;
         color: #ffffff;
         min-height: 100vh;
+        -webkit-text-size-adjust: 100%; /* 防止iOS设备上文字自动放大 */
+        -ms-text-size-adjust: 100%; /* 防止Windows Phone上文字自动放大 */
+      }
+
+      /* 完整版模式增强样式 */
+      .full-version-enhancements {
+        transition: all 0.3s ease-in-out;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .full-version-enhancements .content-container,
+      .full-version-enhancements .changelog-container {
+        box-shadow: 0 6px 20px rgba(255, 140, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .full-version-enhancements .content-container:hover,
+      .full-version-enhancements .changelog-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(255, 140, 0, 0.15);
+      }
+
+      .full-version-enhancements .download-btn {
+        transition: all 0.3s ease;
+      }
+
+      .full-version-enhancements .download-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(255, 98, 0, 0.3);
       }
 
       /* 背景样式 */
@@ -94,6 +141,8 @@
       .notice-container {
         width: 100%;
         margin-top: 0;
+        box-sizing: border-box;
+        overflow: hidden; /* 防止内容溢出 */
       }
 
       .notice {
@@ -104,6 +153,11 @@
         margin: 0;
         font-size: 14px;
         background: rgba(21, 21, 21, 0.92);
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        -ms-word-break: break-all;
       }
 
       /* 内容容器 */
@@ -124,6 +178,8 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       /* App Logo */
@@ -143,6 +199,9 @@
         font-size: 28px;
         margin: 20px 0 15px;
         font-weight: 700;
+        width: 100%;
+        text-align: center;
+        word-break: break-word;
       }
 
       .app-desc {
@@ -151,6 +210,7 @@
         margin: 0 0 30px;
         text-align: center;
         max-width: 80%;
+        word-break: break-word;
       }
 
       /* 下载按钮 */
@@ -202,6 +262,8 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .changelog-title {
@@ -213,6 +275,8 @@
 
       .changelog-content {
         color: #b0b0b0;
+        word-break: break-word;
+        -ms-word-break: break-all;
       }
 
       .changelog-item h3 {
@@ -267,6 +331,8 @@
         max-width: 500px;
         max-height: 80vh;
         overflow-y: auto;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .modal-header {
@@ -310,6 +376,8 @@
         color: #b0b0b0;
         margin-bottom: 15px;
         line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       /* 响应式设计 */
@@ -317,6 +385,8 @@
         .content-container,
         .changelog-container {
           padding: 30px 20px;
+          width: 95%; /* 增加宽度以尽量利用屏幕空间 */
+          width: calc(100% - 20px);
         }
 
         .app-title {
@@ -325,11 +395,124 @@
 
         .app-desc {
           font-size: 14px;
+          max-width: 100%; /* 确保在小屏幕上描述文本不会超出 */
         }
 
         .download-btn {
           padding: 12px 30px;
           font-size: 16px;
+        }
+
+        .notice {
+          padding: 8px 10px; /* 减少通知区域的左右内边距 */
+          font-size: 12px; /* 减小通知区域的字体大小 */
+        }
+
+        .section-title {
+          font-size: 26px; /* 减小节标题的大小 */
+        }
+
+        .changelog-item li {
+          margin-left: -10px; /* 减少列表项的左边距 */
+        }
+
+        .modal-content {
+          width: 95%; /* 在小屏幕上扩大弹窗宽度 */
+        }
+      }
+
+      /* 特小屏幕的额外调整 */
+      @media (max-width: 480px) {
+        .notice {
+          font-size: 11px; /* 进一步减小超小屏幕的字体 */
+          padding: 6px 8px; /* 进一步减少内边距 */
+        }
+
+        .app-title {
+          font-size: 22px;
+        }
+
+        .section-title {
+          font-size: 24px;
+          margin-bottom: 20px; /* 减少节标题底边距 */
+        }
+
+        .changelog-title {
+          font-size: 20px;
+        }
+
+        .download-btn {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+
+        .content-container,
+        .changelog-container {
+          padding: 20px 15px; /* 减少内部空间 */
+        }
+
+        .app-logo {
+          width: 100px; /* 减小logo大小 */
+          height: 100px;
+        }
+
+        .logo-container {
+          margin: 5px 0 20px; /* 减少logo下方间距 */
+        }
+
+        .btn-container {
+          margin: 15px 0 20px; /* 减少按钮外部间距 */
+        }
+
+        .version-info {
+          margin: 15px 0; /* 减少版本信息外部间距 */
+        }
+
+        .changelog-item h3 {
+          font-size: 16px; /* 减小更新日志标题字体 */
+        }
+
+        .modal-header {
+          padding: 10px 15px; /* 减少弹窗头部内边距 */
+        }
+
+        .modal-body {
+          padding: 15px; /* 减少弹窗内容部分内边距 */
+        }
+      }
+
+      /* 超窄屏幕设备的极限适配 */
+      @media (max-width: 320px) {
+        .notice {
+          font-size: 10px; /* 更小的字体 */
+          padding: 5px 6px;
+        }
+
+        .app-title {
+          font-size: 20px;
+        }
+
+        .section-title {
+          font-size: 22px;
+        }
+
+        .app-logo {
+          width: 80px; /* 进一步减小logo大小 */
+          height: 80px;
+        }
+
+        .download-btn {
+          padding: 8px 16px;
+          font-size: 13px;
+        }
+
+        .main-content {
+          padding: 40px 0; /* 减少主内容区域的上下内边距 */
+        }
+
+        .changelog-item li {
+          margin-left: -15px;
+          font-size: 11px; /* 减小列表项文字大小 */
         }
       }
 
@@ -358,20 +541,109 @@
     <div class="background"></div>
     <div class="background-overlay"></div>
 
+    <!-- 兼容模式提示 -->
+    <div
+      id="compatibility-banner"
+      class="notice-container"
+      style="
+        background-color: #2c2c2c;
+        padding: 10px 0;
+        text-align: center;
+        position: relative;
+        z-index: 100;
+        border-bottom: 2px solid rgba(255, 140, 0, 0.4);
+        border-bottom: 2px solid #ff8c00;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      "
+    >
+      <div
+        class="notice"
+        style="
+          background-color: #2c2c2c;
+          color: #ffffff;
+          font-size: 15px;
+          padding: 10px 15px;
+          margin: 0;
+          display: flex;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -moz-box;
+          display: -ms-flexbox;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          -moz-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -webkit-justify-content: center;
+          -moz-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          word-break: break-word;
+          -ms-word-break: break-all;
+        "
+      >
+        <div style="width: 100%; margin-bottom: 5px">
+          <span style="color: #ff8c00; font-weight: bold; margin-right: 8px">兼容模式</span> -
+          当前页面正以兼容模式显示，无法展示完整功能
+        </div>
+        <a
+          href="javascript:void(0)"
+          id="full-version-btn"
+          class="download-btn"
+          style="
+            margin-top: 5px;
+            padding: 6px 15px;
+            font-size: 14px;
+            background: #ff8c00;
+            border-radius: 6px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(255, 98, 0, 0.3);
+            transition: all 0.2s ease;
+          "
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'"
+          >前往标准版</a
+        >
+      </div>
+    </div>
+
+    <!-- 极简版提示 -->
+    <div class="notice-container" style="margin-top: 5px">
+      <p class="notice" style="background-color: #1e1e1e; font-size: 12px">
+        页面仍旧显示异常？<a
+          href="lite.html"
+          id="lite-version-link"
+          style="color: #ff8c00; margin-left: 5px; text-decoration: underline"
+          >尝试极简版</a
+        >
+      </p>
+    </div>
+
     <!-- 页面通知横幅 -->
     <div class="notice-container">
       <!-- 法律声明 -->
-      <p class="notice">
+      <p class="notice" style="word-break: break-word; -ms-word-break: break-all">
         深空 Aurora 不支持 Minecraft 游戏开发商 Mojang Studios
         在中国大陆地区的代理版本《我的世界》， 且不对该版本提供任何形式的功能支持
       </p>
 
       <!-- 中国大陆用户特别提示 -->
-      <p class="notice">
+      <p class="notice" style="word-break: break-word; -ms-word-break: break-all">
         Minecraft ® 是 Microsoft Corporation 的注册商标。深空 Aurora 是独立开发的第三方工具，与
         Mojang Studios、Microsoft 及其在中国大陆地区的授权代理商均无任何关联
 
-        <span class="details-toggle" onclick="toggleDetails()">查看详情</span>
+        <span
+          class="details-toggle"
+          onclick="toggleDetails()"
+          style="display: inline-block; margin-top: 5px"
+          >查看详情</span
+        >
       </p>
     </div>
 
@@ -388,11 +660,11 @@
           <span class="modal-close" onclick="toggleDetails()">&times;</span>
         </div>
         <div class="modal-body">
-          <p>
+          <p style="word-break: break-word; -ms-word-break: break-all">
             作为一个基于 WebSocket 协议开发的第三方工具，深空 Aurora 仅针对 Minecraft
             基岩版进行开发和优化。我们不会对中国大陆地区代理版本进行任何形式的开发和适配。',
           </p>
-          <p>
+          <p style="word-break: break-word; -ms-word-break: break-all">
             深空 Aurora
             在中国大陆地区代理版本中可能表现出一定的兼容性（这源于游戏底层架构的相似性），
             但我们对其运行的有效性和稳定性不承担任何责任。
@@ -406,6 +678,85 @@
 
     <!-- 主内容区域 -->
     <main class="main-content">
+      <!-- 无JavaScript支持的内容 - 提前显示 -->
+      <noscript>
+        <div
+          style="
+            background-color: #151515;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #ff8c00;
+            border-radius: 12px;
+          "
+        >
+          <h2 style="color: #ff8c00">JavaScript 已禁用或不支持</h2>
+          <p>检测到您的浏览器已禁用或不支持JavaScript，为您提供静态下载链接：</p>
+
+          <div style="margin: 25px 0">
+            <h3 style="color: #ff8c00">深空盒子</h3>
+            <p>
+              <a
+                href="https://www.aurora-sky.top/download/app-release-alpha-1-2.apk"
+                style="
+                  color: #ff8c00;
+                  background: #2c2c2c;
+                  padding: 8px 15px;
+                  text-decoration: none;
+                  display: inline-block;
+                  margin: 10px 0;
+                  border-radius: 6px;
+                  border: 1px solid #ff8c00;
+                "
+                >下载 Aurora App</a
+              >
+            </p>
+          </div>
+
+          <div style="margin: 25px 0">
+            <h3 style="color: #ff8c00">联机盒子</h3>
+            <p>
+              <a
+                href="https://www.aurora-sky.top/download/stargate-alpha-0216.apk"
+                style="
+                  color: #ff8c00;
+                  background: #2c2c2c;
+                  padding: 8px 15px;
+                  text-decoration: none;
+                  display: inline-block;
+                  margin: 10px 0;
+                  border-radius: 6px;
+                  border: 1px solid #ff8c00;
+                "
+                >下载 Aurora Stargate</a
+              >
+            </p>
+          </div>
+
+          <p>
+            <a
+              href="lite.html"
+              style="
+                color: #ffffff;
+                background: #ff8c00;
+                padding: 8px 15px;
+                text-decoration: none;
+                display: inline-block;
+                margin: 10px 0;
+                border-radius: 6px;
+              "
+              >查看极简版页面</a
+            >
+          </p>
+        </div>
+      </noscript>
+
+      <!-- JavaScript需要的内容区域 - 在noscript环境中将被隐藏 -->
+      <script>
+        document.write('<div id="js-content">')
+      </script>
+
       <!-- Aurora App 下载部分 -->
       <div class="section">
         <h2 class="section-title">深空盒子 下载</h2>
@@ -497,6 +848,9 @@
           </div>
         </div>
       </div>
+      <script>
+        document.write('</div>')
+      </script>
     </main>
 
     <script>
@@ -509,6 +863,66 @@
         if (modal.style.display === 'flex' && !window.matchMedia('(display-mode: flex)').matches) {
           modal.style.display = 'block'
         }
+      }
+
+      // 兼容模式和完整模式切换
+      function switchToFullVersion() {
+        var banner = document.getElementById('compatibility-banner')
+        if (banner) {
+          banner.style.display = 'none'
+        }
+
+        // 设置cookie记录用户选择
+        setCookie('useFullVersion', 'true', 30)
+
+        // 跳转到Vue完整版页面 - 修复跳转URL，使用相对路径
+        try {
+          var currentPath = window.location.pathname
+          var basePath = ''
+          // 检查 URL 路径中是否含有 /compatible/
+          if (currentPath.indexOf('/compatible/') !== -1) {
+            basePath = currentPath.substring(0, currentPath.lastIndexOf('/compatible/'))
+          } else {
+            // 如果找不到 /compatible/，回退到上一级目录
+            basePath = '..'
+          }
+          window.location.href = basePath + '/#/download'
+        } catch (e) {
+          // 如果出现任何错误，回退到网站根目录
+          window.location.href = '/#'
+        }
+      }
+
+      // 切换到极简版模式
+      function switchToLiteVersion() {
+        // 设置cookie记录用户选择
+        setCookie('useLiteVersion', 'true', 30)
+
+        // 跳转到极简版页面
+        window.location.href = 'lite.html'
+      }
+
+      // 设置cookie函数
+      function setCookie(name, value, days) {
+        var expires = ''
+        if (days) {
+          var date = new Date()
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+          expires = '; expires=' + date.toUTCString()
+        }
+        document.cookie = name + '=' + (value || '') + expires + '; path=/'
+      }
+
+      // 读取cookie函数
+      function getCookie(name) {
+        var nameEQ = name + '='
+        var ca = document.cookie.split(';')
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i]
+          while (c.charAt(0) == ' ') c = c.substring(1, c.length)
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length)
+        }
+        return null
       }
 
       function closeModalOnBackground(event) {
@@ -696,6 +1110,10 @@
       }
 
       function initApp() {
+        // 手动设置一个最大宽度，防止文本溢出
+        document.body.style.maxWidth = '100%'
+        document.body.style.overflowX = 'hidden'
+
         // 获取Aurora App信息
         fetchAppInfo('https://api.aurora-sky.top/update.php', 0)
 
@@ -704,10 +1122,58 @@
 
         // 检测和修复可能的CSS问题
         fixCSSCompatibility()
+
+        // 初始化兼容模式处理
+        initCompatibilityMode()
+      }
+
+      // 初始化兼容模式处理
+      function initCompatibilityMode() {
+        // 在静态HTML页面中始终显示兼容模式横幅，因为这个页面本身就是兼容版
+        var banner = document.getElementById('compatibility-banner')
+        if (banner) {
+          banner.style.display = 'block'
+        }
+
+        // 添加完整版按钮点击事件
+        var fullVersionBtn = document.getElementById('full-version-btn')
+        if (fullVersionBtn) {
+          if (window.addEventListener) {
+            fullVersionBtn.addEventListener('click', switchToFullVersion)
+          } else if (fullVersionBtn.attachEvent) {
+            fullVersionBtn.attachEvent('onclick', switchToFullVersion)
+          } else {
+            fullVersionBtn.onclick = switchToFullVersion
+          }
+        }
+
+        // 检查URL参数，如果有lite=true参数，自动跳转到极简版
+        try {
+          var params = new URLSearchParams(window.location.search)
+          if (params.get('lite') === 'true') {
+            switchToLiteVersion()
+          }
+        } catch (e) {
+          // 兼容不支持URLSearchParams的浏览器
+          if (window.location.search.indexOf('lite=true') !== -1) {
+            switchToLiteVersion()
+          }
+        }
       }
 
       // 修复老旧浏览器中的CSS兼容性问题
       function fixCSSCompatibility() {
+        // 确保所有文本容器都能自动换行
+        var textContainers = document.querySelectorAll(
+          '.notice, .app-title, .app-desc, .modal-body p, .changelog-content, .changelog-item li',
+        )
+        for (var i = 0; i < textContainers.length; i++) {
+          textContainers[i].style.wordWrap = 'break-word'
+          textContainers[i].style.wordBreak = 'break-word'
+          textContainers[i].style.msWordBreak = 'break-all'
+          textContainers[i].style.maxWidth = '100%'
+        }
+
         // 检测Flex支持
         var testEl = document.createElement('div')
         if (
@@ -724,6 +1190,22 @@
           var modal = document.getElementById('detailsModal')
           if (modal) {
             modal.style.overflowY = 'auto'
+          }
+
+          // 修复通知区域在不支持flex的浏览器中的显示
+          var notices = document.querySelectorAll('.notice')
+          for (var i = 0; i < notices.length; i++) {
+            notices[i].style.textAlign = 'center'
+            notices[i].style.wordWrap = 'break-word'
+            notices[i].style.wordBreak = 'break-word'
+          }
+
+          // 确保弹窗内容也能正确换行
+          var modalTexts = document.querySelectorAll('.modal-body p')
+          for (var i = 0; i < modalTexts.length; i++) {
+            modalTexts[i].style.wordWrap = 'break-word'
+            modalTexts[i].style.wordBreak = 'break-word'
+            modalTexts[i].style.msWordBreak = 'break-all'
           }
         }
 
@@ -753,41 +1235,65 @@
             }
           }
         }
-      }
-    </script>
 
-    <!-- 无JavaScript支持的提示 -->
-    <noscript>
-      <div
-        style="
-          background-color: #151515;
-          color: #ffffff;
-          text-align: center;
-          padding: 20px;
-          margin: 20px;
-          border: 1px solid #ff8c00;
-        "
-      >
-        <h2 style="color: #ff8c00">请启用JavaScript</h2>
-        <p>
-          此页面需要JavaScript才能正常工作。请启用浏览器的JavaScript支持，或者使用支持JavaScript的浏览器。
-        </p>
-        <p>如果您无法启用JavaScript，您仍然可以直接从以下链接下载：</p>
-        <p>
-          <a
-            href="https://www.aurora-sky.top/download/app-release-alpha-1-2.apk"
-            style="color: #ff8c00"
-            >Aurora App 下载</a
-          >
-        </p>
-        <p>
-          <a
-            href="https://www.aurora-sky.top/download/stargate-alpha-0216.apk"
-            style="color: #ff8c00"
-            >Aurora Stargate 下载</a
-          >
-        </p>
-      </div>
-    </noscript>
+        // 添加对小屏幕设备的额外处理
+        if (window.innerWidth < 480 || screen.width < 480) {
+          // 对超小屏幕设备进行额外处理
+          var notices = document.querySelectorAll('.notice')
+          for (var i = 0; i < notices.length; i++) {
+            notices[i].style.fontSize = '11px'
+            notices[i].style.wordBreak = 'break-word'
+            notices[i].style.msWordBreak = 'break-all'
+          }
+
+          var titles = document.querySelectorAll('.section-title')
+          for (var i = 0; i < titles.length; i++) {
+            titles[i].style.fontSize = '24px'
+          }
+
+          // 修改changelog列表的缩进
+          var lists = document.querySelectorAll('.changelog-item ul')
+          for (var i = 0; i < lists.length; i++) {
+            lists[i].style.paddingLeft = '15px'
+          }
+
+          // 减小logo尺寸
+          var logos = document.querySelectorAll('.app-logo')
+          for (var i = 0; i < logos.length; i++) {
+            logos[i].style.width = '100px'
+            logos[i].style.height = '100px'
+          }
+        }
+
+        // 极窄屏幕设备处理
+        if (window.innerWidth < 320 || screen.width < 320) {
+          var notices = document.querySelectorAll('.notice')
+          for (var i = 0; i < notices.length; i++) {
+            notices[i].style.fontSize = '10px'
+            notices[i].style.padding = '5px 6px'
+          }
+
+          var logos = document.querySelectorAll('.app-logo')
+          for (var i = 0; i < logos.length; i++) {
+            logos[i].style.width = '80px'
+            logos[i].style.height = '80px'
+          }
+
+          var listItems = document.querySelectorAll('.changelog-item li')
+          for (var i = 0; i < listItems.length; i++) {
+            listItems[i].style.fontSize = '11px'
+          }
+        }
+      }
+
+      // 为极简版链接添加点击事件，保持原始功能
+      window.addEventListener('load', function () {
+        var liteLink = document.getElementById('lite-version-link')
+        if (liteLink) {
+          liteLink.setAttribute('href', 'javascript:void(0)')
+          liteLink.addEventListener('click', switchToLiteVersion)
+        }
+      })
+    </script>
   </body>
 </html>
