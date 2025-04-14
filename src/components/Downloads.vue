@@ -71,7 +71,7 @@
     <div class="content-container scroll-reveal">
       <!-- App Logo -->
       <div class="logo-container">
-        <img src="https://www.aurora-sky.top/icon.png" alt="App Logo" class="app-logo" />
+        <img src="../assets/images/icon.png" alt="App Logo" class="app-logo" />
       </div>
 
       <!-- App 名称 -->
@@ -160,7 +160,7 @@
     <div class="content-container scroll-reveal">
       <!-- App Logo -->
       <div class="logo-container">
-        <img src="https://www.aurora-sky.top/icon.png" alt="App Logo" class="app-logo" />
+        <img src="../assets/images/Stargate.png" alt="App Logo" class="app-logo" />
       </div>
 
       <!-- App 名称 -->
@@ -767,10 +767,16 @@ export default {
   .btn-container {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .download-btn {
     width: 100%;
+    max-width: 80%;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 auto;
   }
 }
 
@@ -895,5 +901,29 @@ export default {
   .license-reject-btn {
     width: 100%;
   }
+}
+
+/* 下载按钮 */
+.btn-container {
+  margin: 20px 0 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.download-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff8c00, #ff6200);
+  color: #ffffff;
+  padding: 15px 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  text-align: center;
 }
 </style>
