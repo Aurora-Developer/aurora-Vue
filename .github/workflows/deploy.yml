@@ -50,7 +50,4 @@ jobs:
           echo "Local compatible directory contents:" 
           ls -la compatible/
            
-          rsync -avz --no-times --no-perms -e "ssh -i ~/.ssh/id_rsa" compatible/ chenskiro@$SERVER_IP:/www/wwwroot/www
-
-          echo "远程服务器compatible目录内容:"
-          ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "ls -la /www/wwwroot/www/"
+          rsync -avz --no-times --no-perms -e "ssh -i ~/.ssh/id_rsa" compatible/ chenskiro@$SERVER_IP:/www/wwwroot/www/compatible
