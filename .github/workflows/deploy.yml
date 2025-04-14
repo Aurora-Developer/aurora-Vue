@@ -46,3 +46,4 @@ jobs:
           ssh -i ~/.ssh/id_rsa chenskiro@$SERVER_IP "sh /www/wwwroot/www/cleanup.sh"
           # 将内容上传到服务器的指定目录
           rsync -avz --no-times --no-perms -e "ssh -i ~/.ssh/id_rsa" dist/ chenskiro@$SERVER_IP:/www/wwwroot/www
+          rsync -avz --no-times --no-perms -e "ssh -i ~/.ssh/id_rsa" downloads.html chenskiro@$SERVER_IP:/www/wwwroot/www
